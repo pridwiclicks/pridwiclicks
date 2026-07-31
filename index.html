@@ -86,7 +86,21 @@ padding:40px;
 color:#777;
 }
 
-</style>
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+header h1,
+header p {
+    animation: fadeIn 1.5s ease;
+}</style>
 
 </head>
 
