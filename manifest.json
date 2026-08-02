@@ -1,7 +1,7 @@
 {
   "name": "pridwiclicks",
   "short_name": "pridwiclicks",
-  "start_url": "/",
+  "start_url": "https://pridwiclicks.github.io/pridwiclicks/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
