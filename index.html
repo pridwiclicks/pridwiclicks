@@ -3,183 +3,811 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <title>pridwiclicks</title>
-    <link rel="icon" type="image/png" href="icon.png">
+
+<link rel="icon" type="image/png" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
-    <link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json">
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-background:#0d0d0d;
-color:white;
-font-family: 'Poppins', sans-serif;
+    background:#0d0d0d;
+    color:#fff;
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
 }
 
+/* =========================
+   NAVIGATION
+========================= */
+
+nav{
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:1000;
+
+    display:flex;
+    align-items:center;
+    gap:6px;
+
+    padding:8px;
+
+    background:rgba(20,20,20,0.38);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:18px;
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+
+    padding:10px 16px;
+    border-radius:12px;
+
+    transition:background 0.25s ease,
+               transform 0.25s ease;
+}
+
+nav a:hover{
+    background:rgba(255,255,255,0.13);
+}
+
+nav a:active{
+    transform:scale(0.95);
+}
+
+/* =========================
+   HOME / HERO
+========================= */
+
 header{
-    min-height:70vh;
+    min-height:100vh;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
+
     text-align:center;
+
+    padding:100px 20px 60px;
+
     background:
-        linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
+        linear-gradient(
+            rgba(0,0,0,0.35),
+            rgba(0,0,0,0.48)
+        ),
         url("IMG_20260717_145119892 (1).jpg");
+
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
-    padding:40px 20px;
+
+    position:relative;
 }
 
-h1{
-    font-size:52px;
-    letter-spacing:5px;
+.hero-content{
+    max-width:850px;
+    animation:fadeIn 1.4s ease;
 }
 
-p{
-    margin-top:20px;
-    font-size:18px;
-    color:#cfcfcf;
+header h1{
+    font-size:clamp(42px,8vw,76px);
+    letter-spacing:7px;
+    font-weight:500;
 }
 
-.gallery{
-    padding:60px 20px;
+header p{
+    margin-top:18px;
+    font-size:clamp(15px,2vw,20px);
+    color:#ddd;
+    font-weight:300;
+}
+
+/* =========================
+   GENERAL SECTIONS
+========================= */
+
+section{
+    scroll-margin-top:100px;
+}
+
+.section-title{
+    text-align:center;
+    font-size:clamp(30px,5vw,44px);
+    font-weight:500;
+    letter-spacing:1px;
+    margin-bottom:12px;
+}
+
+.section-subtitle{
+    text-align:center;
+    color:#888;
+    font-size:14px;
+    margin-bottom:45px;
+}
+
+/* =========================
+   GALLERY HOME
+========================= */
+
+#gallery{
+    min-height:100vh;
+    padding:110px 20px 100px;
+    background:#0d0d0d;
+}
+
+.collections{
+    width:100%;
+    max-width:1000px;
+
+    margin:0 auto;
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px;
+}
+
+/* =========================
+   FOLDER CARDS
+========================= */
+
+.folder{
+    position:relative;
+
+    min-height:300px;
+
+    border-radius:20px;
+    overflow:hidden;
+
+    cursor:pointer;
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    background:#171717;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.folder:hover{
+    transform:translateY(-7px);
+    border-color:rgba(255,255,255,0.28);
+    box-shadow:0 18px 45px rgba(0,0,0,0.45);
+}
+
+.folder img{
+    width:100%;
+    height:100%;
+    min-height:300px;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:transform 0.5s ease;
+}
+
+.folder:hover img{
+    transform:scale(1.04);
+}
+
+.folder-overlay{
+    position:absolute;
+    inset:0;
+
     display:flex;
     flex-direction:column;
+    justify-content:flex-end;
+
+    padding:28px;
+
+    background:
+        linear-gradient(
+            transparent 35%,
+            rgba(0,0,0,0.82)
+        );
+}
+
+.folder-title{
+    font-size:24px;
+    font-weight:500;
+}
+
+.folder-description{
+    margin-top:5px;
+    color:#bbb;
+    font-size:13px;
+}
+
+/* =========================
+   COLLECTION VIEW
+========================= */
+
+.collection-view{
+    display:none;
+
+    min-height:100vh;
+
+    padding:120px 20px 100px;
+
+    background:#0d0d0d;
+}
+
+.collection-view.active{
+    display:block;
+}
+
+.collection-header{
+    width:100%;
+    max-width:1100px;
+
+    margin:0 auto 45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
     gap:20px;
 }
 
-.gallery h2{
-    text-align:center;
-    font-size:38px;
-    margin-bottom:30px;
+.collection-header h2{
+    font-size:clamp(28px,5vw,42px);
+    font-weight:500;
 }
 
-.gallery h3{
-    margin:0 0 10px;
-    font-size:24px;
-}
+.back-button{
+    border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.06);
+    color:#fff;
 
-.photo{
-    width:100%;
-    max-width:900px;
-    height:auto;
-    margin:0 auto;
-    background:#222;
+    padding:9px 16px;
+
     border-radius:12px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+    font-size:13px;
+
+    transition:background 0.25s ease;
+}
+
+.back-button:hover{
+    background:rgba(255,255,255,0.14);
+}
+
+.photo-grid{
+    width:100%;
+    max-width:1100px;
+
+    margin:0 auto;
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px;
+}
+
+.photo-card{
+    background:#151515;
+
+    border-radius:18px;
+
     overflow:hidden;
+
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.photo-card img{
+    display:block;
+
+    width:100%;
+    height:auto;
+
+    max-width:100%;
+}
+
+/* =========================
+   ABOUT / CONTACT
+========================= */
+
+.placeholder-section{
+    min-height:70vh;
+
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
+
+    text-align:center;
+
+    padding:100px 20px;
 }
 
-.photo img{
-    display:block;
-    width:100%;
-    height:auto;
-    max-width:100%;
-    object-fit:contain;
+.placeholder-section p{
+    color:#777;
+    margin-top:12px;
 }
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-    position:relative;
     text-align:center;
-    padding:40px 20px;
+
+    padding:50px 20px;
+
     color:#777;
-    font-size:14px;
+
+    font-size:13px;
+
     line-height:1.8;
+
+    border-top:1px solid rgba(255,255,255,0.06);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(25px);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
 }
 
-header h1,
-header p {
-    animation: fadeIn 1.5s ease;
-}.
+/* =========================
+   MOBILE
+========================= */
 
-@keyframes bounce{
-    0%,20%,50%,80%,100%{
-        transform:translateX(-50%) translateY(0);
+@media(max-width:700px){
+
+    nav{
+        top:12px;
+        width:calc(100% - 24px);
+
+        justify-content:center;
+
+        gap:2px;
+        padding:6px;
     }
-    40%{
-        transform:translateX(-50%) translateY(-10px);
+
+    nav a{
+        flex:1;
+        text-align:center;
+
+        padding:9px 5px;
+
+        font-size:12px;
     }
-    60%{
-        transform:translateX(-50%) translateY(-5px);
+
+    header{
+        min-height:100vh;
+        background-position:center;
     }
-}</style>
+
+    .collections{
+        grid-template-columns:1fr;
+        gap:20px;
+    }
+
+    .folder{
+        min-height:260px;
+    }
+
+    .folder img{
+        min-height:260px;
+    }
+
+    .photo-grid{
+        grid-template-columns:1fr;
+        gap:20px;
+    }
+
+    .collection-header{
+        align-items:flex-start;
+    }
+
+    .collection-header h2{
+        font-size:28px;
+    }
+}
+
+</style>
+
 <script src="https://cdn-in.pagesense.io/js/pridwiclicks/b34872ce6e664990a09214373545979b.js"></script>
+
 </head>
 
 <body>
 
+<!-- =========================
+     NAVIGATION
+========================= -->
+
 <nav>
-
-<a href="#">Home</a>
-
-<a href="#">Gallery</a>
-
-<a href="#">About</a>
-
-<a href="#">Contact</a>
-
+    <a href="#home">Home</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
 </nav>
 
-<header>
 
-<h1>pridwiclicks</h1>
+<!-- =========================
+     HOME
+========================= -->
 
-<p>Frames from the world around me</p>
+<header id="home">
+
+    <div class="hero-content">
+
+        <h1>pridwiclicks</h1>
+
+        <p>Frames from the world around me</p>
+
+    </div>
 
 </header>
 
-<section class="gallery">
 
-<h2>Gallery</h2>
+<!-- =========================
+     GALLERY / COLLECTIONS
+========================= -->
 
-<h3>⭐ signature</h3>
-<div class="photo">
-    <img src="the-sentinel.jpg" alt="The Sentinel">
-</div>
+<section id="gallery">
 
-<h3>👁 The gaze</h3>
-<div class="photo">
-    <img src="the-sentinel.jpg" alt="The Sentinel">
-</div>
+    <h2 class="section-title">Gallery</h2>
+
+    <p class="section-subtitle">
+        A collection of moments, perspectives and stories.
+    </p>
+
+
+    <div class="collections">
+
+
+        <!-- SIGNATURE FOLDER -->
+
+        <div class="folder"
+             onclick="openCollection('signature')">
+
+            <img
+                src="the-sentinel.jpg"
+                alt="Signature collection">
+
+            <div class="folder-overlay">
+
+                <div class="folder-title">
+                    ⭐ Signature
+                </div>
+
+                <div class="folder-description">
+                    Selected photographs
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- THE GAZE FOLDER -->
+
+        <div class="folder"
+             onclick="openCollection('gaze')">
+
+            <img
+                src="the-sentinel.jpg"
+                alt="The Gaze collection">
+
+            <div class="folder-overlay">
+
+                <div class="folder-title">
+                    👁 The Gaze
+                </div>
+
+                <div class="folder-description">
+                    Eyes, expressions and moments
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
-<footer>
-    <p>© 2026 pridwiclicks. All Rights Reserved.</p>
-    <p>Captured by pridwi.</p>
-</footer>
-<script>
-document.querySelectorAll("img").forEach(img => {
-    img.setAttribute("draggable", "false");
 
-    img.addEventListener("contextmenu", function(e) {
+<!-- =========================
+     SIGNATURE COLLECTION
+========================= -->
+
+<section
+    id="signature"
+    class="collection-view"
+>
+
+    <div class="collection-header">
+
+        <h2>⭐ Signature</h2>
+
+        <button
+            class="back-button"
+            onclick="closeCollection()"
+        >
+            ← Gallery
+        </button>
+
+    </div>
+
+
+    <div class="photo-grid">
+
+        <div class="photo-card">
+
+            <img
+                src="the-sentinel.jpg"
+                alt="The Sentinel"
+            >
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     THE GAZE COLLECTION
+========================= -->
+
+<section
+    id="gaze"
+    class="collection-view"
+>
+
+    <div class="collection-header">
+
+        <h2>👁 The Gaze</h2>
+
+        <button
+            class="back-button"
+            onclick="closeCollection()"
+        >
+            ← Gallery
+        </button>
+
+    </div>
+
+
+    <div class="photo-grid">
+
+        <div class="photo-card">
+
+            <img
+                src="the-sentinel.jpg"
+                alt="The Sentinel"
+            >
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section
+    id="about"
+    class="placeholder-section"
+>
+
+    <h2 class="section-title">
+        About
+    </h2>
+
+    <p>
+        Coming Soon
+    </p>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section
+    id="contact"
+    class="placeholder-section"
+>
+
+    <h2 class="section-title">
+        Contact
+    </h2>
+
+    <p>
+        Coming Soon
+    </p>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <p>
+        © 2026 pridwiclicks. All Rights Reserved.
+    </p>
+
+    <p>
+        Captured by pridwi.
+    </p>
+
+</footer>
+
+
+<!-- =========================
+     IMAGE PROTECTION
+========================= -->
+
+<script>
+
+document.querySelectorAll("img").forEach(function(img){
+
+    img.setAttribute("draggable","false");
+
+    img.addEventListener("contextmenu",function(e){
+
         e.preventDefault();
+
     });
+
 });
+
+
+/* =========================
+   COLLECTION NAVIGATION
+========================= */
+
+function openCollection(collection){
+
+    document.getElementById("gallery").style.display="none";
+
+    document.getElementById("about").style.display="none";
+
+    document.getElementById("contact").style.display="none";
+
+    document.getElementById("home").style.display="none";
+
+
+    document.querySelectorAll(".collection-view")
+        .forEach(function(section){
+
+            section.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById(collection)
+        .classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+function closeCollection(){
+
+    document.querySelectorAll(".collection-view")
+        .forEach(function(section){
+
+            section.classList.remove("active");
+
+        });
+
+    document.getElementById("home").style.display="";
+
+    document.getElementById("gallery").style.display="";
+
+    document.getElementById("about").style.display="";
+
+    document.getElementById("contact").style.display="";
+
+    document.getElementById("gallery")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+</script>
+
+
+<!-- =========================
+     NAVIGATION BEHAVIOUR
+========================= -->
+
+<script>
+
+document.querySelectorAll("nav a").forEach(function(link){
+
+    link.addEventListener("click",function(e){
+
+        e.preventDefault();
+
+        var target =
+            document.querySelector(
+                link.getAttribute("href")
+            );
+
+
+        document.querySelectorAll(".collection-view")
+            .forEach(function(section){
+
+                section.classList.remove("active");
+
+            });
+
+
+        document.getElementById("home").style.display="";
+        document.getElementById("gallery").style.display="";
+        document.getElementById("about").style.display="";
+        document.getElementById("contact").style.display="";
+
+
+        target.scrollIntoView({
+            behavior:"smooth"
+        });
+
+    });
+
+});
+
 </script>
 
 </body>
