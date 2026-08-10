@@ -96,24 +96,11 @@ nav a:active{
 
 
 /* =========================
-   PAGE SYSTEM
-========================= */
-
-.page{
-    display:none;
-    min-height:100vh;
-}
-
-.page.active{
-    display:block;
-}
-
-
-/* =========================
    HOME
 ========================= */
 
 #home{
+    display:block;
     min-height:100vh;
 }
 
@@ -178,14 +165,14 @@ header p{
    GALLERY SECTION ON HOME
 ========================= */
 
-#gallery-section{
+#gallery{
     min-height:100vh;
 
-    padding:110px 20px 100px;
+    padding:120px 20px 100px;
 
     background:#0d0d0d;
 
-    scroll-margin-top:30px;
+    scroll-margin-top:40px;
 }
 
 .section-title{
@@ -309,6 +296,23 @@ header p{
 
 
 /* =========================
+   SEPARATE PAGES
+========================= */
+
+.page{
+    display:none;
+
+    min-height:100vh;
+
+    background:#0d0d0d;
+}
+
+.page.active{
+    display:block;
+}
+
+
+/* =========================
    COLLECTION PAGE
 ========================= */
 
@@ -415,6 +419,11 @@ header p{
     max-width:100%;
 }
 
+
+/* =========================
+   INSTAGRAM STYLE CAPTION
+========================= */
+
 .photo-caption{
     padding:14px 16px 17px;
 
@@ -490,7 +499,7 @@ header p{
 
     padding:60px 20px 30px;
 
-    background:rgba(0,0,0,0.94);
+    background:rgba(0,0,0,0.96);
 
     backdrop-filter:blur(8px);
     -webkit-backdrop-filter:blur(8px);
@@ -501,7 +510,9 @@ header p{
 }
 
 .viewer-content{
-    max-width:1100px;
+    width:100%;
+
+    max-width:1200px;
 
     max-height:90vh;
 
@@ -532,6 +543,8 @@ header p{
 
 .viewer-caption{
     width:100%;
+
+    max-width:800px;
 
     text-align:center;
 
@@ -625,6 +638,16 @@ footer{
 
 
 /* =========================
+   IMAGE PROTECTION
+========================= */
+
+img{
+    -webkit-user-drag:none;
+    user-select:none;
+}
+
+
+/* =========================
    MOBILE
 ========================= */
 
@@ -656,6 +679,10 @@ footer{
         min-height:100vh;
 
         background-position:center;
+    }
+
+    #gallery{
+        padding-top:110px;
     }
 
     .collections{
@@ -698,12 +725,11 @@ footer{
 
 
 /* =========================
-   IMAGE PROTECTION
+   NO SCROLL WHEN VIEWER OPEN
 ========================= */
 
-img{
-    -webkit-user-drag:none;
-    user-select:none;
+body.viewer-open{
+    overflow:hidden;
 }
 
 </style>
@@ -722,31 +748,19 @@ img{
 
 <nav>
 
-    <a
-        href="#"
-        onclick="navigateToHome(); return false;"
-    >
+    <a href="#home" onclick="goHome(); return false;">
         Home
     </a>
 
-    <a
-        href="#gallery"
-        onclick="navigateToGallery(); return false;"
-    >
+    <a href="#gallery" onclick="goGallery(); return false;">
         Gallery
     </a>
 
-    <a
-        href="#"
-        onclick="navigateToPage('about'); return false;"
-    >
+    <a href="#about" onclick="openPage('about'); return false;">
         About
     </a>
 
-    <a
-        href="#"
-        onclick="navigateToPage('contact'); return false;"
-    >
+    <a href="#contact" onclick="openPage('contact'); return false;">
         Contact
     </a>
 
@@ -755,23 +769,18 @@ img{
 
 <!-- =========================
      HOME
-     HERO + GALLERY
+     HERO + GALLERY TOGETHER
 ========================= -->
 
-<div
-    id="home"
-    class="page active"
->
+<div id="home">
 
     <!-- HERO -->
 
-    <header>
+    <header id="hero">
 
         <div class="hero-content">
 
-            <h1>
-                pridwiclicks
-            </h1>
+            <h1>pridwiclicks</h1>
 
             <p>
                 Frames from the world around me
@@ -784,7 +793,7 @@ img{
 
     <!-- GALLERY -->
 
-    <section id="gallery-section">
+    <section id="gallery">
 
         <h2 class="section-title">
             Gallery
@@ -856,6 +865,21 @@ img{
 
     </section>
 
+
+    <!-- HOME FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 pridwiclicks. All Rights Reserved.
+        </p>
+
+        <p>
+            Captured by pridwi.
+        </p>
+
+    </footer>
+
 </div>
 
 
@@ -863,10 +887,7 @@ img{
      SIGNATURE COLLECTION
 ========================= -->
 
-<div
-    id="signature"
-    class="page"
->
+<div id="signature" class="page">
 
     <main class="collection-page">
 
@@ -878,7 +899,7 @@ img{
 
             <button
                 class="back-button"
-                onclick="navigateToGallery()"
+                onclick="backToGallery()"
             >
                 ← Gallery
             </button>
@@ -887,7 +908,6 @@ img{
 
 
         <div class="photo-grid">
-
 
             <div
                 class="photo-card"
@@ -917,7 +937,6 @@ img{
 
             </div>
 
-
         </div>
 
     </main>
@@ -929,10 +948,7 @@ img{
      THE GAZE COLLECTION
 ========================= -->
 
-<div
-    id="gaze"
-    class="page"
->
+<div id="gaze" class="page">
 
     <main class="collection-page">
 
@@ -944,7 +960,7 @@ img{
 
             <button
                 class="back-button"
-                onclick="navigateToGallery()"
+                onclick="backToGallery()"
             >
                 ← Gallery
             </button>
@@ -953,7 +969,6 @@ img{
 
 
         <div class="photo-grid">
-
 
             <div
                 class="photo-card"
@@ -983,7 +998,6 @@ img{
 
             </div>
 
-
         </div>
 
     </main>
@@ -995,10 +1009,7 @@ img{
      ABOUT
 ========================= -->
 
-<div
-    id="about"
-    class="page"
->
+<div id="about" class="page">
 
     <main class="placeholder-page">
 
@@ -1019,10 +1030,7 @@ img{
      CONTACT
 ========================= -->
 
-<div
-    id="contact"
-    class="page"
->
+<div id="contact" class="page">
 
     <main class="placeholder-page">
 
@@ -1040,7 +1048,7 @@ img{
 
 
 <!-- =========================
-     PHOTO VIEWER
+     FULL SCREEN PHOTO VIEWER
 ========================= -->
 
 <div
@@ -1050,8 +1058,8 @@ img{
 
     <button
         class="close-viewer"
-        onclick="closePhoto(true)"
-        aria-label="Close"
+        onclick="closePhoto()"
+        aria-label="Close photo"
     >
         ×
     </button>
@@ -1078,30 +1086,28 @@ img{
 </div>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-    <p>
-        © 2026 pridwiclicks. All Rights Reserved.
-    </p>
-
-    <p>
-        Captured by pridwi.
-    </p>
-
-</footer>
-
-
 <script>
 
 /* =====================================================
-   PAGE DISPLAY
+   WEBSITE STATE
 ===================================================== */
 
-function hideAllPages(){
+var currentPage = "home";
+var currentCollection = null;
+var viewerOpen = false;
+
+
+/* =====================================================
+   HOME
+   Home contains BOTH hero and gallery.
+===================================================== */
+
+function goHome(){
+
+    closePhoto();
+
+    currentPage = "home";
+    currentCollection = null;
 
     document
         .querySelectorAll(".page")
@@ -1111,42 +1117,19 @@ function hideAllPages(){
 
         });
 
-}
+    document
+        .getElementById("home")
+        .style.display = "block";
 
-
-function showPage(pageId){
-
-    closePhoto(false);
-
-    hideAllPages();
-
-    var page =
-        document.getElementById(pageId);
-
-    if(page){
-
-        page.classList.add("active");
-
-    }
-
-}
-
-
-/* =====================================================
-   HOME
-===================================================== */
-
-function navigateToHome(){
 
     history.pushState(
         {
             page:"home"
         },
         "",
-        window.location.pathname
+        "#home"
     );
 
-    showPage("home");
 
     window.scrollTo({
         top:0,
@@ -1157,25 +1140,44 @@ function navigateToHome(){
 
 
 /* =====================================================
-   GALLERY
+   GALLERY NAVIGATION
+   Gallery is NOT a separate page.
+   It is below the hero on Home.
 ===================================================== */
 
-function navigateToGallery(){
+function goGallery(){
+
+    closePhoto();
+
+    currentPage = "home";
+    currentCollection = null;
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+    document
+        .getElementById("home")
+        .style.display = "block";
+
 
     history.pushState(
         {
             page:"gallery"
         },
         "",
-        window.location.pathname + "#gallery"
+        "#gallery"
     );
 
-    showPage("home");
 
     setTimeout(function(){
 
         document
-            .getElementById("gallery-section")
+            .getElementById("gallery")
             .scrollIntoView({
                 behavior:"smooth",
                 block:"start"
@@ -1187,20 +1189,49 @@ function navigateToGallery(){
 
 
 /* =====================================================
-   ABOUT / CONTACT
+   OPEN ABOUT / CONTACT
 ===================================================== */
 
-function navigateToPage(pageId){
+function openPage(pageId){
+
+    closePhoto();
+
+    currentPage = pageId;
+    currentCollection = null;
+
+
+    document
+        .getElementById("home")
+        .style.display = "none";
+
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+
+    var page =
+        document.getElementById(pageId);
+
+    if(page){
+
+        page.classList.add("active");
+
+    }
+
 
     history.pushState(
         {
             page:pageId
         },
         "",
-        window.location.pathname + "#" + pageId
+        "#" + pageId
     );
 
-    showPage(pageId);
 
     window.scrollTo({
         top:0,
@@ -1211,20 +1242,49 @@ function navigateToPage(pageId){
 
 
 /* =====================================================
-   COLLECTIONS
+   OPEN COLLECTION
 ===================================================== */
 
 function openCollection(collectionId){
+
+    closePhoto();
+
+    currentCollection = collectionId;
+    currentPage = collectionId;
+
+
+    document
+        .getElementById("home")
+        .style.display = "none";
+
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+
+    var collection =
+        document.getElementById(collectionId);
+
+    if(collection){
+
+        collection.classList.add("active");
+
+    }
+
 
     history.pushState(
         {
             page:collectionId
         },
         "",
-        window.location.pathname + "#" + collectionId
+        "#" + collectionId
     );
 
-    showPage(collectionId);
 
     window.scrollTo({
         top:0,
@@ -1235,105 +1295,41 @@ function openCollection(collectionId){
 
 
 /* =====================================================
-   PHOTO VIEWER
+   BACK TO GALLERY BUTTON
 ===================================================== */
 
-function openPhoto(
-    imageSrc,
-    title,
-    description
-){
+function backToGallery(){
 
-    var viewer =
-        document.getElementById("photoViewer");
+    closePhoto();
 
-    var image =
-        document.getElementById("viewerImage");
-
-    var titleElement =
-        document.getElementById("viewerTitle");
-
-    var descriptionElement =
-        document.getElementById("viewerDescription");
+    currentPage = "home";
+    currentCollection = null;
 
 
-    image.src = imageSrc;
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
 
-    image.alt = title;
+            page.classList.remove("active");
 
-    titleElement.textContent = title;
-
-    descriptionElement.textContent = description;
+        });
 
 
-    viewer.classList.add("active");
-
-    document.body.style.overflow = "hidden";
+    document
+        .getElementById("home")
+        .style.display = "block";
 
 
     history.pushState(
         {
-            page:"viewer"
+            page:"gallery"
         },
         "",
-        window.location.pathname + "#viewer"
+        "#gallery"
     );
 
-}
 
+    setTimeout(function(){
 
-/* =====================================================
-   CLOSE PHOTO VIEWER
-===================================================== */
-
-function closePhoto(fromButton){
-
-    var viewer =
-        document.getElementById("photoViewer");
-
-
-    if(!viewer.classList.contains("active")){
-
-        return;
-
-    }
-
-
-    viewer.classList.remove("active");
-
-    document.body.style.overflow = "";
-
-
-    /*
-       If the X button was pressed, remove the
-       viewer history entry by going back once.
-       If Android/browser Back triggered this function,
-       do not go back again.
-    */
-
-    if(fromButton === true){
-
-        history.back();
-
-    }
-
-}
-
-
-/* =====================================================
-   ANDROID / BROWSER BACK BUTTON
-===================================================== */
-
-window.addEventListener(
-    "popstate",
-    function(event){
-
-        var state =
-            event.state;
-
-
-        /* ---------------------------------------------
-           PHOTO VIEWER
-        --------------------------------------------- */
-
-  
+        document
+            .getElementById("ga
