@@ -69,8 +69,9 @@ nav a{
     padding:10px 16px;
     border-radius:12px;
 
-    transition:background 0.25s ease,
-               transform 0.25s ease;
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
 }
 
 nav a:hover{
@@ -82,8 +83,25 @@ nav a:active{
 }
 
 /* =========================
+   PAGE SYSTEM
+========================= */
+
+.page{
+    display:none;
+    min-height:100vh;
+}
+
+.page.active{
+    display:block;
+}
+
+/* =========================
    HOME / HERO
 ========================= */
+
+#home{
+    min-height:100vh;
+}
 
 header{
     min-height:100vh;
@@ -130,12 +148,8 @@ header p{
 }
 
 /* =========================
-   GENERAL SECTIONS
+   GENERAL
 ========================= */
-
-section{
-    scroll-margin-top:100px;
-}
 
 .section-title{
     text-align:center;
@@ -153,19 +167,18 @@ section{
 }
 
 /* =========================
-   GALLERY HOME
+   GALLERY PAGE
 ========================= */
 
 #gallery{
+    padding:120px 20px 100px;
     min-height:100vh;
-    padding:110px 20px 100px;
     background:#0d0d0d;
 }
 
 .collections{
     width:100%;
-    max-width:1000px;
-
+    max-width:1050px;
     margin:0 auto;
 
     display:grid;
@@ -180,7 +193,7 @@ section{
 .folder{
     position:relative;
 
-    min-height:300px;
+    height:360px;
 
     border-radius:20px;
     overflow:hidden;
@@ -206,7 +219,6 @@ section{
 .folder img{
     width:100%;
     height:100%;
-    min-height:300px;
 
     object-fit:cover;
 
@@ -231,24 +243,24 @@ section{
 
     background:
         linear-gradient(
-            transparent 35%,
-            rgba(0,0,0,0.82)
+            transparent 30%,
+            rgba(0,0,0,0.88)
         );
 }
 
 .folder-title{
-    font-size:24px;
+    font-size:25px;
     font-weight:500;
 }
 
 .folder-description{
-    margin-top:5px;
+    margin-top:6px;
     color:#bbb;
     font-size:13px;
 }
 
 /* =========================
-   COLLECTION VIEW
+   COLLECTION PAGE
 ========================= */
 
 .collection-view{
@@ -269,7 +281,7 @@ section{
     width:100%;
     max-width:1100px;
 
-    margin:0 auto 45px;
+    margin:0 auto 42px;
 
     display:flex;
     align-items:center;
@@ -279,7 +291,7 @@ section{
 }
 
 .collection-header h2{
-    font-size:clamp(28px,5vw,42px);
+    font-size:clamp(30px,5vw,44px);
     font-weight:500;
 }
 
@@ -297,12 +309,22 @@ section{
     font-family:inherit;
     font-size:13px;
 
-    transition:background 0.25s ease;
+    transition:
+        background 0.25s ease,
+        transform 0.2s ease;
 }
 
 .back-button:hover{
     background:rgba(255,255,255,0.14);
 }
+
+.back-button:active{
+    transform:scale(0.96);
+}
+
+/* =========================
+   PHOTO GRID
+========================= */
 
 .photo-grid{
     width:100%;
@@ -312,7 +334,7 @@ section{
 
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:28px;
+    gap:35px;
 }
 
 .photo-card{
@@ -325,6 +347,13 @@ section{
     border:1px solid rgba(255,255,255,0.1);
 }
 
+.photo-image-wrap{
+    position:relative;
+    cursor:zoom-in;
+    overflow:hidden;
+    background:#111;
+}
+
 .photo-card img{
     display:block;
 
@@ -332,28 +361,60 @@ section{
     height:auto;
 
     max-width:100%;
+
+    transition:transform 0.4s ease;
+}
+
+.photo-image-wrap:hover img{
+    transform:scale(1.015);
 }
 
 /* =========================
-   ABOUT / CONTACT
+   PHOTO INFORMATION
 ========================= */
 
-.placeholder-section{
-    min-height:70vh;
+.photo-info{
+    padding:18px 20px 21px;
+}
+
+.photo-title{
+    font-size:20px;
+    font-weight:500;
+    line-height:1.35;
+}
+
+.photo-caption{
+    margin-top:6px;
+    color:#999;
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* =========================
+   ABOUT / CONTACT PAGES
+========================= */
+
+.placeholder-page{
+    min-height:100vh;
 
     display:flex;
     flex-direction:column;
+
     justify-content:center;
     align-items:center;
 
     text-align:center;
 
-    padding:100px 20px;
+    padding:120px 20px 80px;
 }
 
-.placeholder-section p{
+.placeholder-page .section-title{
+    margin-bottom:8px;
+}
+
+.placeholder-page p{
     color:#777;
-    margin-top:12px;
+    font-size:14px;
 }
 
 /* =========================
@@ -375,7 +436,175 @@ footer{
 }
 
 /* =========================
-   ANIMATION
+   PHOTO VIEWER
+========================= */
+
+.lightbox{
+    position:fixed;
+    inset:0;
+
+    z-index:5000;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(0,0,0,0.96);
+
+    padding:30px 70px;
+}
+
+.lightbox.active{
+    display:flex;
+}
+
+.lightbox-content{
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+}
+
+.lightbox-image{
+    max-width:92vw;
+    max-height:88vh;
+
+    width:auto;
+    height:auto;
+
+    object-fit:contain;
+
+    user-select:none;
+    -webkit-user-select:none;
+
+    animation:viewerIn 0.25s ease;
+}
+
+.lightbox-close{
+    position:absolute;
+
+    top:18px;
+    right:20px;
+
+    width:44px;
+    height:44px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,0.2);
+
+    background:rgba(255,255,255,0.08);
+
+    color:#fff;
+
+    font-size:26px;
+    line-height:1;
+
+    cursor:pointer;
+
+    z-index:10;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.lightbox-close:hover{
+    background:rgba(255,255,255,0.18);
+}
+
+.lightbox-close:active{
+    transform:scale(0.92);
+}
+
+.lightbox-arrow{
+    position:absolute;
+
+    top:50%;
+    transform:translateY(-50%);
+
+    width:46px;
+    height:46px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,0.18);
+
+    background:rgba(255,255,255,0.08);
+
+    color:#fff;
+
+    font-size:25px;
+
+    cursor:pointer;
+
+    z-index:10;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.lightbox-arrow:hover{
+    background:rgba(255,255,255,0.18);
+}
+
+.lightbox-prev{
+    left:18px;
+}
+
+.lightbox-next{
+    right:18px;
+}
+
+.lightbox-caption{
+    position:absolute;
+
+    left:50%;
+    bottom:18px;
+
+    transform:translateX(-50%);
+
+    width:min(700px,85vw);
+
+    text-align:center;
+
+    padding:12px 18px;
+
+    background:rgba(0,0,0,0.55);
+
+    border-radius:14px;
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+}
+
+.lightbox-caption-title{
+    font-size:16px;
+    font-weight:500;
+}
+
+.lightbox-caption-text{
+    margin-top:3px;
+    font-size:12px;
+    color:#aaa;
+}
+
+/* =========================
+   ANIMATIONS
 ========================= */
 
 @keyframes fadeIn{
@@ -387,6 +616,18 @@ footer{
     to{
         opacity:1;
         transform:translateY(0);
+    }
+}
+
+@keyframes viewerIn{
+    from{
+        opacity:0;
+        transform:scale(0.97);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
     }
 }
 
@@ -420,30 +661,97 @@ footer{
         background-position:center;
     }
 
+    header h1{
+        letter-spacing:5px;
+    }
+
+    #gallery{
+        padding:105px 15px 80px;
+    }
+
     .collections{
         grid-template-columns:1fr;
         gap:20px;
     }
 
     .folder{
-        min-height:260px;
+        height:300px;
     }
 
-    .folder img{
-        min-height:260px;
+    .collection-view{
+        padding:105px 15px 80px;
+    }
+
+    .collection-header{
+        margin-bottom:30px;
+        align-items:center;
+    }
+
+    .collection-header h2{
+        font-size:29px;
     }
 
     .photo-grid{
         grid-template-columns:1fr;
-        gap:20px;
+        gap:25px;
     }
 
-    .collection-header{
-        align-items:flex-start;
+    .photo-card{
+        border-radius:16px;
     }
 
-    .collection-header h2{
-        font-size:28px;
+    .photo-info{
+        padding:16px 17px 19px;
+    }
+
+    .photo-title{
+        font-size:19px;
+    }
+
+    .photo-caption{
+        font-size:13px;
+    }
+
+    .lightbox{
+        padding:20px 10px;
+    }
+
+    .lightbox-image{
+        max-width:96vw;
+        max-height:82vh;
+    }
+
+    .lightbox-close{
+        top:12px;
+        right:12px;
+    }
+
+    .lightbox-arrow{
+        width:40px;
+        height:40px;
+        font-size:21px;
+    }
+
+    .lightbox-prev{
+        left:8px;
+    }
+
+    .lightbox-next{
+        right:8px;
+    }
+
+    .lightbox-caption{
+        bottom:12px;
+        width:88vw;
+        padding:9px 12px;
+    }
+
+    .lightbox-caption-title{
+        font-size:14px;
+    }
+
+    .lightbox-caption-text{
+        font-size:11px;
     }
 }
 
@@ -460,10 +768,23 @@ footer{
 ========================= -->
 
 <nav>
-    <a href="#home">Home</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+
+    <a href="#" onclick="showPage('home'); return false;">
+        Home
+    </a>
+
+    <a href="#" onclick="showPage('gallery'); return false;">
+        Gallery
+    </a>
+
+    <a href="#" onclick="showPage('about'); return false;">
+        About
+    </a>
+
+    <a href="#" onclick="showPage('contact'); return false;">
+        Contact
+    </a>
+
 </nav>
 
 
@@ -471,26 +792,34 @@ footer{
      HOME
 ========================= -->
 
-<header id="home">
+<div id="home" class="page active">
 
-    <div class="hero-content">
+    <header>
 
-        <h1>pridwiclicks</h1>
+        <div class="hero-content">
 
-        <p>Frames from the world around me</p>
+            <h1>pridwiclicks</h1>
 
-    </div>
+            <p>
+                Frames from the world around me
+            </p>
 
-</header>
+        </div>
+
+    </header>
+
+</div>
 
 
 <!-- =========================
-     GALLERY / COLLECTIONS
+     GALLERY
 ========================= -->
 
-<section id="gallery">
+<div id="gallery" class="page">
 
-    <h2 class="section-title">Gallery</h2>
+    <h2 class="section-title">
+        Gallery
+    </h2>
 
     <p class="section-subtitle">
         A collection of moments, perspectives and stories.
@@ -500,14 +829,17 @@ footer{
     <div class="collections">
 
 
-        <!-- SIGNATURE FOLDER -->
+        <!-- SIGNATURE -->
 
-        <div class="folder"
-             onclick="openCollection('signature')">
+        <div
+            class="folder"
+            onclick="openCollection('signature')"
+        >
 
             <img
                 src="the-sentinel.jpg"
-                alt="Signature collection">
+                alt="Signature collection"
+            >
 
             <div class="folder-overlay">
 
@@ -524,14 +856,17 @@ footer{
         </div>
 
 
-        <!-- THE GAZE FOLDER -->
+        <!-- THE GAZE -->
 
-        <div class="folder"
-             onclick="openCollection('gaze')">
+        <div
+            class="folder"
+            onclick="openCollection('gaze')"
+        >
 
             <img
                 src="the-sentinel.jpg"
-                alt="The Gaze collection">
+                alt="The Gaze collection"
+            >
 
             <div class="folder-overlay">
 
@@ -549,7 +884,7 @@ footer{
 
     </div>
 
-</section>
+</div>
 
 
 <!-- =========================
@@ -563,7 +898,9 @@ footer{
 
     <div class="collection-header">
 
-        <h2>⭐ Signature</h2>
+        <h2>
+            ⭐ Signature
+        </h2>
 
         <button
             class="back-button"
@@ -577,12 +914,37 @@ footer{
 
     <div class="photo-grid">
 
-        <div class="photo-card">
 
-            <img
-                src="the-sentinel.jpg"
-                alt="The Sentinel"
+        <div
+            class="photo-card"
+            data-title="The Sentinel"
+            data-caption="A quiet moment captured in the wild."
+        >
+
+            <div
+                class="photo-image-wrap"
+                onclick="openViewer(this)"
             >
+
+                <img
+                    src="the-sentinel.jpg"
+                    alt="The Sentinel"
+                >
+
+            </div>
+
+
+            <div class="photo-info">
+
+                <div class="photo-title">
+                    The Sentinel
+                </div>
+
+                <div class="photo-caption">
+                    A quiet moment captured in the wild.
+                </div>
+
+            </div>
 
         </div>
 
@@ -602,7 +964,9 @@ footer{
 
     <div class="collection-header">
 
-        <h2>👁 The Gaze</h2>
+        <h2>
+            👁 The Gaze
+        </h2>
 
         <button
             class="back-button"
@@ -616,12 +980,37 @@ footer{
 
     <div class="photo-grid">
 
-        <div class="photo-card">
 
-            <img
-                src="the-sentinel.jpg"
-                alt="The Sentinel"
+        <div
+            class="photo-card"
+            data-title="The Gaze"
+            data-caption="A fleeting moment held in a single gaze."
+        >
+
+            <div
+                class="photo-image-wrap"
+                onclick="openViewer(this)"
             >
+
+                <img
+                    src="the-sentinel.jpg"
+                    alt="The Gaze"
+                >
+
+            </div>
+
+
+            <div class="photo-info">
+
+                <div class="photo-title">
+                    The Gaze
+                </div>
+
+                <div class="photo-caption">
+                    A fleeting moment held in a single gaze.
+                </div>
+
+            </div>
 
         </div>
 
@@ -634,9 +1023,9 @@ footer{
      ABOUT
 ========================= -->
 
-<section
+<div
     id="about"
-    class="placeholder-section"
+    class="page placeholder-page"
 >
 
     <h2 class="section-title">
@@ -647,16 +1036,16 @@ footer{
         Coming Soon
     </p>
 
-</section>
+</div>
 
 
 <!-- =========================
      CONTACT
 ========================= -->
 
-<section
+<div
     id="contact"
-    class="placeholder-section"
+    class="page placeholder-page"
 >
 
     <h2 class="section-title">
@@ -667,7 +1056,7 @@ footer{
         Coming Soon
     </p>
 
-</section>
+</div>
 
 
 <!-- =========================
@@ -688,40 +1077,90 @@ footer{
 
 
 <!-- =========================
-     IMAGE PROTECTION
+     FULL SCREEN PHOTO VIEWER
+========================= -->
+
+<div
+    id="lightbox"
+    class="lightbox"
+    onclick="closeViewer(event)"
+>
+
+    <div
+        class="lightbox-content"
+        onclick="event.stopPropagation()"
+    >
+
+        <button
+            class="lightbox-close"
+            onclick="closeViewer()"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+
+        <button
+            class="lightbox-arrow lightbox-prev"
+            onclick="previousPhoto()"
+            aria-label="Previous photo"
+        >
+            ‹
+        </button>
+
+
+        <img
+            id="lightbox-image"
+            class="lightbox-image"
+            src=""
+            alt=""
+        >
+
+
+        <button
+            class="lightbox-arrow lightbox-next"
+            onclick="nextPhoto()"
+            aria-label="Next photo"
+        >
+            ›
+        </button>
+
+
+        <div class="lightbox-caption">
+
+            <div
+                id="lightbox-title"
+                class="lightbox-caption-title"
+            ></div>
+
+            <div
+                id="lightbox-text"
+                class="lightbox-caption-text"
+            ></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
 ========================= -->
 
 <script>
 
-document.querySelectorAll("img").forEach(function(img){
-
-    img.setAttribute("draggable","false");
-
-    img.addEventListener("contextmenu",function(e){
-
-        e.preventDefault();
-
-    });
-
-});
-
-
 /* =========================
-   COLLECTION NAVIGATION
+   PAGE NAVIGATION
 ========================= */
 
-function openCollection(collection){
+function showPage(pageId){
 
-    document.getElementById("gallery").style.display="none";
+    closeViewer();
 
-    document.getElementById("about").style.display="none";
-
-    document.getElementById("contact").style.display="none";
-
-    document.getElementById("home").style.display="none";
-
-
-    document.querySelectorAll(".collection-view")
+    document
+        .querySelectorAll(".collection-view")
         .forEach(function(section){
 
             section.classList.remove("active");
@@ -730,8 +1169,65 @@ function openCollection(collection){
 
 
     document
-        .getElementById(collection)
-        .classList.add("active");
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+
+    var page =
+        document.getElementById(pageId);
+
+
+    if(page){
+        page.classList.add("active");
+    }
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================
+   COLLECTION NAVIGATION
+========================= */
+
+function openCollection(collection){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+
+    document
+        .querySelectorAll(".collection-view")
+        .forEach(function(section){
+
+            section.classList.remove("active");
+
+        });
+
+
+    var selected =
+        document.getElementById(collection);
+
+
+    if(selected){
+
+        selected.classList.add("active");
+
+    }
+
 
     window.scrollTo({
         top:0,
@@ -743,72 +1239,62 @@ function openCollection(collection){
 
 function closeCollection(){
 
-    document.querySelectorAll(".collection-view")
+    document
+        .querySelectorAll(".collection-view")
         .forEach(function(section){
 
             section.classList.remove("active");
 
         });
 
-    document.getElementById("home").style.display="";
 
-    document.getElementById("gallery").style.display="";
+    document
+        .getElementById("gallery")
+        .classList.add("active");
 
-    document.getElementById("about").style.display="";
 
-    document.getElementById("contact").style.display="";
-
-    document.getElementById("gallery")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
-</script>
+
+/* =========================
+   PHOTO VIEWER
+========================= */
+
+var currentPhotos = [];
+var currentPhotoIndex = 0;
 
 
-<!-- =========================
-     NAVIGATION BEHAVIOUR
-========================= -->
+function buildPhotoList(){
 
-<script>
-
-document.querySelectorAll("nav a").forEach(function(link){
-
-    link.addEventListener("click",function(e){
-
-        e.preventDefault();
-
-        var target =
-            document.querySelector(
-                link.getAttribute("href")
-            );
+    currentPhotos = [];
 
 
-        document.querySelectorAll(".collection-view")
-            .forEach(function(section){
-
-                section.classList.remove("active");
-
-            });
+    var activeCollection =
+        document.querySelector(
+            ".collection-view.active"
+        );
 
 
-        document.getElementById("home").style.display="";
-        document.getElementById("gallery").style.display="";
-        document.getElementById("about").style.display="";
-        document.getElementById("contact").style.display="";
+    if(!activeCollection){
+        return;
+    }
 
 
-        target.scrollIntoView({
-            behavior:"smooth"
-        });
+    activeCollection
+        .querySelectorAll(".photo-card")
+        .forEach(function(card){
 
-    });
+            var image =
+                card.querySelector("img");
 
-});
 
-</script>
+            if(image){
 
-</body>
-</html>
+                currentPhotos.push({
+
+  
