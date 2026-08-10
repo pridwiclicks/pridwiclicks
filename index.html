@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <title>pridwiclicks</title>
@@ -15,6 +18,10 @@
 <link rel="manifest" href="manifest.json">
 
 <style>
+
+/* =========================
+   RESET
+========================= */
 
 *{
     margin:0;
@@ -33,6 +40,7 @@ body{
     overflow-x:hidden;
 }
 
+
 /* =========================
    NAVIGATION
 ========================= */
@@ -42,7 +50,8 @@ nav{
     top:18px;
     left:50%;
     transform:translateX(-50%);
-    z-index:1000;
+
+    z-index:10000;
 
     display:flex;
     align-items:center;
@@ -51,6 +60,7 @@ nav{
     padding:8px;
 
     background:rgba(20,20,20,0.38);
+
     border:1px solid rgba(255,255,255,0.18);
     border-radius:18px;
 
@@ -63,10 +73,12 @@ nav{
 nav a{
     color:#fff;
     text-decoration:none;
+
     font-size:14px;
     font-weight:500;
 
     padding:10px 16px;
+
     border-radius:12px;
 
     transition:
@@ -82,6 +94,7 @@ nav a:active{
     transform:scale(0.95);
 }
 
+
 /* =========================
    PAGE SYSTEM
 ========================= */
@@ -95,19 +108,26 @@ nav a:active{
     display:block;
 }
 
+
 /* =========================
-   HOME / HERO
+   HOME
 ========================= */
 
 #home{
     min-height:100vh;
 }
 
+
+/* =========================
+   HERO
+========================= */
+
 header{
     min-height:100vh;
 
     display:flex;
     flex-direction:column;
+
     justify-content:center;
     align-items:center;
 
@@ -131,71 +151,88 @@ header{
 
 .hero-content{
     max-width:850px;
+
     animation:fadeIn 1.4s ease;
 }
 
 header h1{
     font-size:clamp(42px,8vw,76px);
+
     letter-spacing:7px;
+
     font-weight:500;
 }
 
 header p{
     margin-top:18px;
+
     font-size:clamp(15px,2vw,20px);
+
     color:#ddd;
+
     font-weight:300;
 }
 
+
 /* =========================
-   GENERAL
+   GENERAL PAGE CONTENT
 ========================= */
+
+.page-content{
+    min-height:100vh;
+
+    padding:120px 20px 100px;
+
+    background:#0d0d0d;
+}
 
 .section-title{
     text-align:center;
+
     font-size:clamp(30px,5vw,44px);
+
     font-weight:500;
+
     letter-spacing:1px;
+
     margin-bottom:12px;
 }
 
 .section-subtitle{
     text-align:center;
+
     color:#888;
+
     font-size:14px;
+
     margin-bottom:45px;
 }
 
-/* =========================
-   GALLERY PAGE
-========================= */
 
-#gallery{
-    padding:120px 20px 100px;
-    min-height:100vh;
-    background:#0d0d0d;
-}
+/* =========================
+   GALLERY FOLDERS
+========================= */
 
 .collections{
     width:100%;
-    max-width:1050px;
+    max-width:1000px;
+
     margin:0 auto;
 
     display:grid;
+
     grid-template-columns:repeat(2,1fr);
+
     gap:28px;
 }
-
-/* =========================
-   FOLDER CARDS
-========================= */
 
 .folder{
     position:relative;
 
-    height:360px;
+    min-height:300px;
 
     border-radius:20px;
+
     overflow:hidden;
 
     cursor:pointer;
@@ -212,13 +249,17 @@ header p{
 
 .folder:hover{
     transform:translateY(-7px);
+
     border-color:rgba(255,255,255,0.28);
+
     box-shadow:0 18px 45px rgba(0,0,0,0.45);
 }
 
 .folder img{
     width:100%;
     height:100%;
+
+    min-height:300px;
 
     object-fit:cover;
 
@@ -233,39 +274,43 @@ header p{
 
 .folder-overlay{
     position:absolute;
+
     inset:0;
 
     display:flex;
+
     flex-direction:column;
+
     justify-content:flex-end;
 
     padding:28px;
 
     background:
         linear-gradient(
-            transparent 30%,
-            rgba(0,0,0,0.88)
+            transparent 35%,
+            rgba(0,0,0,0.82)
         );
 }
 
 .folder-title{
-    font-size:25px;
+    font-size:24px;
     font-weight:500;
 }
 
 .folder-description{
-    margin-top:6px;
+    margin-top:5px;
+
     color:#bbb;
+
     font-size:13px;
 }
+
 
 /* =========================
    COLLECTION PAGE
 ========================= */
 
-.collection-view{
-    display:none;
-
+.collection-page{
     min-height:100vh;
 
     padding:120px 20px 100px;
@@ -273,31 +318,32 @@ header p{
     background:#0d0d0d;
 }
 
-.collection-view.active{
-    display:block;
-}
-
 .collection-header{
     width:100%;
     max-width:1100px;
 
-    margin:0 auto 42px;
+    margin:0 auto 45px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     gap:20px;
 }
 
 .collection-header h2{
-    font-size:clamp(30px,5vw,44px);
+    font-size:clamp(28px,5vw,42px);
+
     font-weight:500;
 }
 
 .back-button{
     border:1px solid rgba(255,255,255,0.2);
+
     background:rgba(255,255,255,0.06);
+
     color:#fff;
 
     padding:9px 16px;
@@ -307,20 +353,16 @@ header p{
     cursor:pointer;
 
     font-family:inherit;
+
     font-size:13px;
 
-    transition:
-        background 0.25s ease,
-        transform 0.2s ease;
+    transition:background 0.25s ease;
 }
 
 .back-button:hover{
     background:rgba(255,255,255,0.14);
 }
 
-.back-button:active{
-    transform:scale(0.96);
-}
 
 /* =========================
    PHOTO GRID
@@ -333,8 +375,10 @@ header p{
     margin:0 auto;
 
     display:grid;
+
     grid-template-columns:repeat(2,1fr);
-    gap:35px;
+
+    gap:28px;
 }
 
 .photo-card{
@@ -345,77 +389,200 @@ header p{
     overflow:hidden;
 
     border:1px solid rgba(255,255,255,0.1);
+
+    cursor:pointer;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
 }
 
-.photo-image-wrap{
-    position:relative;
-    cursor:zoom-in;
-    overflow:hidden;
-    background:#111;
+.photo-card:hover{
+    transform:translateY(-4px);
+
+    border-color:rgba(255,255,255,0.25);
 }
 
 .photo-card img{
     display:block;
 
     width:100%;
+
     height:auto;
 
     max-width:100%;
-
-    transition:transform 0.4s ease;
-}
-
-.photo-image-wrap:hover img{
-    transform:scale(1.015);
-}
-
-/* =========================
-   PHOTO INFORMATION
-========================= */
-
-.photo-info{
-    padding:18px 20px 21px;
-}
-
-.photo-title{
-    font-size:20px;
-    font-weight:500;
-    line-height:1.35;
 }
 
 .photo-caption{
-    margin-top:6px;
-    color:#999;
-    font-size:13px;
-    line-height:1.7;
+    padding:14px 16px 17px;
+
+    background:#151515;
 }
 
+.photo-title{
+    font-size:16px;
+
+    font-weight:500;
+}
+
+.photo-description{
+    margin-top:4px;
+
+    font-size:12px;
+
+    color:#888;
+}
+
+
 /* =========================
-   ABOUT / CONTACT PAGES
+   ABOUT / CONTACT
 ========================= */
 
 .placeholder-page{
     min-height:100vh;
 
     display:flex;
+
     flex-direction:column;
 
     justify-content:center;
+
     align-items:center;
 
     text-align:center;
 
-    padding:120px 20px 80px;
+    padding:120px 20px 100px;
 }
 
-.placeholder-page .section-title{
-    margin-bottom:8px;
+.placeholder-page h2{
+    font-size:42px;
+
+    font-weight:500;
 }
 
 .placeholder-page p{
+    margin-top:12px;
+
     color:#777;
+
     font-size:14px;
 }
+
+
+/* =========================
+   PHOTO VIEWER
+========================= */
+
+.photo-viewer{
+    position:fixed;
+
+    inset:0;
+
+    z-index:20000;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:60px 20px 30px;
+
+    background:rgba(0,0,0,0.94);
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+}
+
+.photo-viewer.active{
+    display:flex;
+}
+
+.viewer-content{
+    max-width:1100px;
+
+    max-height:90vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+.viewer-content img{
+    display:block;
+
+    max-width:100%;
+
+    max-height:78vh;
+
+    width:auto;
+
+    height:auto;
+
+    object-fit:contain;
+
+    border-radius:8px;
+}
+
+.viewer-caption{
+    width:100%;
+
+    text-align:center;
+
+    padding-top:15px;
+}
+
+.viewer-caption h3{
+    font-size:18px;
+
+    font-weight:500;
+}
+
+.viewer-caption p{
+    margin-top:4px;
+
+    font-size:13px;
+
+    color:#999;
+}
+
+.close-viewer{
+    position:absolute;
+
+    top:20px;
+    right:20px;
+
+    width:42px;
+    height:42px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,0.2);
+
+    background:rgba(255,255,255,0.08);
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:background 0.25s ease;
+}
+
+.close-viewer:hover{
+    background:rgba(255,255,255,0.18);
+}
+
 
 /* =========================
    FOOTER
@@ -435,179 +602,13 @@ footer{
     border-top:1px solid rgba(255,255,255,0.06);
 }
 
-/* =========================
-   PHOTO VIEWER
-========================= */
-
-.lightbox{
-    position:fixed;
-    inset:0;
-
-    z-index:5000;
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    background:rgba(0,0,0,0.96);
-
-    padding:30px 70px;
-}
-
-.lightbox.active{
-    display:flex;
-}
-
-.lightbox-content{
-    width:100%;
-    height:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    position:relative;
-}
-
-.lightbox-image{
-    max-width:92vw;
-    max-height:88vh;
-
-    width:auto;
-    height:auto;
-
-    object-fit:contain;
-
-    user-select:none;
-    -webkit-user-select:none;
-
-    animation:viewerIn 0.25s ease;
-}
-
-.lightbox-close{
-    position:absolute;
-
-    top:18px;
-    right:20px;
-
-    width:44px;
-    height:44px;
-
-    border-radius:50%;
-
-    border:1px solid rgba(255,255,255,0.2);
-
-    background:rgba(255,255,255,0.08);
-
-    color:#fff;
-
-    font-size:26px;
-    line-height:1;
-
-    cursor:pointer;
-
-    z-index:10;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-.lightbox-close:hover{
-    background:rgba(255,255,255,0.18);
-}
-
-.lightbox-close:active{
-    transform:scale(0.92);
-}
-
-.lightbox-arrow{
-    position:absolute;
-
-    top:50%;
-    transform:translateY(-50%);
-
-    width:46px;
-    height:46px;
-
-    border-radius:50%;
-
-    border:1px solid rgba(255,255,255,0.18);
-
-    background:rgba(255,255,255,0.08);
-
-    color:#fff;
-
-    font-size:25px;
-
-    cursor:pointer;
-
-    z-index:10;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-.lightbox-arrow:hover{
-    background:rgba(255,255,255,0.18);
-}
-
-.lightbox-prev{
-    left:18px;
-}
-
-.lightbox-next{
-    right:18px;
-}
-
-.lightbox-caption{
-    position:absolute;
-
-    left:50%;
-    bottom:18px;
-
-    transform:translateX(-50%);
-
-    width:min(700px,85vw);
-
-    text-align:center;
-
-    padding:12px 18px;
-
-    background:rgba(0,0,0,0.55);
-
-    border-radius:14px;
-
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-}
-
-.lightbox-caption-title{
-    font-size:16px;
-    font-weight:500;
-}
-
-.lightbox-caption-text{
-    margin-top:3px;
-    font-size:12px;
-    color:#aaa;
-}
 
 /* =========================
-   ANIMATIONS
+   ANIMATION
 ========================= */
 
 @keyframes fadeIn{
+
     from{
         opacity:0;
         transform:translateY(25px);
@@ -617,19 +618,9 @@ footer{
         opacity:1;
         transform:translateY(0);
     }
+
 }
 
-@keyframes viewerIn{
-    from{
-        opacity:0;
-        transform:scale(0.97);
-    }
-
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
-}
 
 /* =========================
    MOBILE
@@ -639,16 +630,19 @@ footer{
 
     nav{
         top:12px;
+
         width:calc(100% - 24px);
 
         justify-content:center;
 
         gap:2px;
+
         padding:6px;
     }
 
     nav a{
         flex:1;
+
         text-align:center;
 
         padding:9px 5px;
@@ -658,101 +652,56 @@ footer{
 
     header{
         min-height:100vh;
+
         background-position:center;
-    }
-
-    header h1{
-        letter-spacing:5px;
-    }
-
-    #gallery{
-        padding:105px 15px 80px;
     }
 
     .collections{
         grid-template-columns:1fr;
+
         gap:20px;
     }
 
     .folder{
-        height:300px;
+        min-height:260px;
     }
 
-    .collection-view{
-        padding:105px 15px 80px;
-    }
-
-    .collection-header{
-        margin-bottom:30px;
-        align-items:center;
-    }
-
-    .collection-header h2{
-        font-size:29px;
+    .folder img{
+        min-height:260px;
     }
 
     .photo-grid{
         grid-template-columns:1fr;
-        gap:25px;
+
+        gap:20px;
     }
 
-    .photo-card{
-        border-radius:16px;
+    .collection-header{
+        align-items:flex-start;
     }
 
-    .photo-info{
-        padding:16px 17px 19px;
+    .collection-header h2{
+        font-size:28px;
     }
 
-    .photo-title{
-        font-size:19px;
+    .placeholder-page h2{
+        font-size:34px;
     }
 
-    .photo-caption{
-        font-size:13px;
+    .viewer-content img{
+        max-height:70vh;
     }
 
-    .lightbox{
-        padding:20px 10px;
-    }
+}
 
-    .lightbox-image{
-        max-width:96vw;
-        max-height:82vh;
-    }
 
-    .lightbox-close{
-        top:12px;
-        right:12px;
-    }
+/* =========================
+   PREVENT IMAGE DRAG
+========================= */
 
-    .lightbox-arrow{
-        width:40px;
-        height:40px;
-        font-size:21px;
-    }
-
-    .lightbox-prev{
-        left:8px;
-    }
-
-    .lightbox-next{
-        right:8px;
-    }
-
-    .lightbox-caption{
-        bottom:12px;
-        width:88vw;
-        padding:9px 12px;
-    }
-
-    .lightbox-caption-title{
-        font-size:14px;
-    }
-
-    .lightbox-caption-text{
-        font-size:11px;
-    }
+img{
+    -webkit-user-drag:none;
+    user-select:none;
 }
 
 </style>
@@ -761,7 +710,9 @@ footer{
 
 </head>
 
+
 <body>
+
 
 <!-- =========================
      NAVIGATION
@@ -817,72 +768,77 @@ footer{
 
 <div id="gallery" class="page">
 
-    <h2 class="section-title">
-        Gallery
-    </h2>
+    <main class="page-content">
 
-    <p class="section-subtitle">
-        A collection of moments, perspectives and stories.
-    </p>
+        <h2 class="section-title">
+            Gallery
+        </h2>
+
+        <p class="section-subtitle">
+            A collection of moments, perspectives and stories.
+        </p>
 
 
-    <div class="collections">
+        <div class="collections">
 
 
-        <!-- SIGNATURE -->
+            <!-- SIGNATURE -->
 
-        <div
-            class="folder"
-            onclick="openCollection('signature')"
-        >
-
-            <img
-                src="the-sentinel.jpg"
-                alt="Signature collection"
+            <div
+                class="folder"
+                onclick="openCollection('signature')"
             >
 
-            <div class="folder-overlay">
+                <img
+                    src="the-sentinel.jpg"
+                    alt="Signature collection"
+                >
 
-                <div class="folder-title">
-                    ⭐ Signature
-                </div>
+                <div class="folder-overlay">
 
-                <div class="folder-description">
-                    Selected photographs
+                    <div class="folder-title">
+                        ⭐ Signature
+                    </div>
+
+                    <div class="folder-description">
+                        Selected photographs
+                    </div>
+
                 </div>
 
             </div>
 
-        </div>
 
+            <!-- THE GAZE -->
 
-        <!-- THE GAZE -->
-
-        <div
-            class="folder"
-            onclick="openCollection('gaze')"
-        >
-
-            <img
-                src="the-sentinel.jpg"
-                alt="The Gaze collection"
+            <div
+                class="folder"
+                onclick="openCollection('gaze')"
             >
 
-            <div class="folder-overlay">
+                <img
+                    src="the-sentinel.jpg"
+                    alt="The Gaze collection"
+                >
 
-                <div class="folder-title">
-                    👁 The Gaze
-                </div>
+                <div class="folder-overlay">
 
-                <div class="folder-description">
-                    Eyes, expressions and moments
+                    <div class="folder-title">
+                        👁 The Gaze
+                    </div>
+
+                    <div class="folder-description">
+                        Eyes, expressions and moments
+                    </div>
+
                 </div>
 
             </div>
 
+
         </div>
 
-    </div>
+    </main>
 
 </div>
 
@@ -891,39 +847,36 @@ footer{
      SIGNATURE COLLECTION
 ========================= -->
 
-<section
-    id="signature"
-    class="collection-view"
->
+<div id="signature" class="page">
 
-    <div class="collection-header">
+    <main class="collection-page">
 
-        <h2>
-            ⭐ Signature
-        </h2>
+        <div class="collection-header">
 
-        <button
-            class="back-button"
-            onclick="closeCollection()"
-        >
-            ← Gallery
-        </button>
+            <h2>
+                ⭐ Signature
+            </h2>
 
-    </div>
+            <button
+                class="back-button"
+                onclick="showPage('gallery')"
+            >
+                ← Gallery
+            </button>
 
-
-    <div class="photo-grid">
+        </div>
 
 
-        <div
-            class="photo-card"
-            data-title="The Sentinel"
-            data-caption="A quiet moment captured in the wild."
-        >
+        <div class="photo-grid">
+
 
             <div
-                class="photo-image-wrap"
-                onclick="openViewer(this)"
+                class="photo-card"
+                onclick="openPhoto(
+                    'the-sentinel.jpg',
+                    'The Sentinel',
+                    'Signature collection'
+                )"
             >
 
                 <img
@@ -931,110 +884,108 @@ footer{
                     alt="The Sentinel"
                 >
 
-            </div>
-
-
-            <div class="photo-info">
-
-                <div class="photo-title">
-                    The Sentinel
-                </div>
-
                 <div class="photo-caption">
-                    A quiet moment captured in the wild.
+
+                    <div class="photo-title">
+                        The Sentinel
+                    </div>
+
+                    <div class="photo-description">
+                        A moment captured in the wild.
+                    </div>
+
                 </div>
 
             </div>
+
 
         </div>
 
-    </div>
+    </main>
 
-</section>
+</div>
 
 
 <!-- =========================
      THE GAZE COLLECTION
 ========================= -->
 
-<section
-    id="gaze"
-    class="collection-view"
->
+<div id="gaze" class="page">
 
-    <div class="collection-header">
+    <main class="collection-page">
 
-        <h2>
-            👁 The Gaze
-        </h2>
+        <div class="collection-header">
 
-        <button
-            class="back-button"
-            onclick="closeCollection()"
-        >
-            ← Gallery
-        </button>
+            <h2>
+                👁 The Gaze
+            </h2>
 
-    </div>
+            <button
+                class="back-button"
+                onclick="showPage('gallery')"
+            >
+                ← Gallery
+            </button>
 
-
-    <div class="photo-grid">
+        </div>
 
 
-        <div
-            class="photo-card"
-            data-title="The Gaze"
-            data-caption="A fleeting moment held in a single gaze."
-        >
+        <div class="photo-grid">
+
 
             <div
-                class="photo-image-wrap"
-                onclick="openViewer(this)"
+                class="photo-card"
+                onclick="openPhoto(
+                    'the-sentinel.jpg',
+                    'The Sentinel',
+                    'The Gaze collection'
+                )"
             >
 
                 <img
                     src="the-sentinel.jpg"
-                    alt="The Gaze"
+                    alt="The Sentinel"
                 >
 
-            </div>
-
-
-            <div class="photo-info">
-
-                <div class="photo-title">
-                    The Gaze
-                </div>
-
                 <div class="photo-caption">
-                    A fleeting moment held in a single gaze.
+
+                    <div class="photo-title">
+                        The Sentinel
+                    </div>
+
+                    <div class="photo-description">
+                        Eyes, expressions and moments.
+                    </div>
+
                 </div>
 
             </div>
+
 
         </div>
 
-    </div>
+    </main>
 
-</section>
+</div>
 
 
 <!-- =========================
      ABOUT
 ========================= -->
 
-<div
-    id="about"
-    class="page placeholder-page"
->
+<div id="about" class="page">
 
-    <h2 class="section-title">
-        About
-    </h2>
+    <main class="placeholder-page">
 
-    <p>
-        Coming Soon
-    </p>
+        <h2>
+            About
+        </h2>
+
+        <p>
+            Coming Soon
+        </p>
+
+    </main>
 
 </div>
 
@@ -1043,18 +994,58 @@ footer{
      CONTACT
 ========================= -->
 
+<div id="contact" class="page">
+
+    <main class="placeholder-page">
+
+        <h2>
+            Contact
+        </h2>
+
+        <p>
+            Coming Soon
+        </p>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     PHOTO VIEWER
+========================= -->
+
 <div
-    id="contact"
-    class="page placeholder-page"
+    id="photoViewer"
+    class="photo-viewer"
 >
 
-    <h2 class="section-title">
-        Contact
-    </h2>
+    <button
+        class="close-viewer"
+        onclick="closePhoto()"
+        aria-label="Close"
+    >
+        ×
+    </button>
 
-    <p>
-        Coming Soon
-    </p>
+
+    <div class="viewer-content">
+
+        <img
+            id="viewerImage"
+            src=""
+            alt=""
+        >
+
+        <div class="viewer-caption">
+
+            <h3 id="viewerTitle"></h3>
+
+            <p id="viewerDescription"></p>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -1076,79 +1067,6 @@ footer{
 </footer>
 
 
-<!-- =========================
-     FULL SCREEN PHOTO VIEWER
-========================= -->
-
-<div
-    id="lightbox"
-    class="lightbox"
-    onclick="closeViewer(event)"
->
-
-    <div
-        class="lightbox-content"
-        onclick="event.stopPropagation()"
-    >
-
-        <button
-            class="lightbox-close"
-            onclick="closeViewer()"
-            aria-label="Close"
-        >
-            ×
-        </button>
-
-
-        <button
-            class="lightbox-arrow lightbox-prev"
-            onclick="previousPhoto()"
-            aria-label="Previous photo"
-        >
-            ‹
-        </button>
-
-
-        <img
-            id="lightbox-image"
-            class="lightbox-image"
-            src=""
-            alt=""
-        >
-
-
-        <button
-            class="lightbox-arrow lightbox-next"
-            onclick="nextPhoto()"
-            aria-label="Next photo"
-        >
-            ›
-        </button>
-
-
-        <div class="lightbox-caption">
-
-            <div
-                id="lightbox-title"
-                class="lightbox-caption-title"
-            ></div>
-
-            <div
-                id="lightbox-text"
-                class="lightbox-caption-text"
-            ></div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
 <script>
 
 /* =========================
@@ -1157,16 +1075,11 @@ footer{
 
 function showPage(pageId){
 
-    closeViewer();
+    /* Close photo viewer if open */
+    closePhoto();
 
-    document
-        .querySelectorAll(".collection-view")
-        .forEach(function(section){
 
-            section.classList.remove("active");
-
-        });
-
+    /* Hide every page */
 
     document
         .querySelectorAll(".page")
@@ -1177,14 +1090,19 @@ function showPage(pageId){
         });
 
 
+    /* Show requested page */
+
     var page =
         document.getElementById(pageId);
 
-
     if(page){
+
         page.classList.add("active");
+
     }
 
+
+    /* Always start from top */
 
     window.scrollTo({
         top:0,
@@ -1198,65 +1116,9 @@ function showPage(pageId){
    COLLECTION NAVIGATION
 ========================= */
 
-function openCollection(collection){
+function openCollection(collectionId){
 
-    document
-        .querySelectorAll(".page")
-        .forEach(function(page){
-
-            page.classList.remove("active");
-
-        });
-
-
-    document
-        .querySelectorAll(".collection-view")
-        .forEach(function(section){
-
-            section.classList.remove("active");
-
-        });
-
-
-    var selected =
-        document.getElementById(collection);
-
-
-    if(selected){
-
-        selected.classList.add("active");
-
-    }
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-function closeCollection(){
-
-    document
-        .querySelectorAll(".collection-view")
-        .forEach(function(section){
-
-            section.classList.remove("active");
-
-        });
-
-
-    document
-        .getElementById("gallery")
-        .classList.add("active");
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    showPage(collectionId);
 
 }
 
@@ -1265,36 +1127,100 @@ function closeCollection(){
    PHOTO VIEWER
 ========================= */
 
-var currentPhotos = [];
-var currentPhotoIndex = 0;
+function openPhoto(
+    imageSrc,
+    title,
+    description
+){
+
+    var viewer =
+        document.getElementById("photoViewer");
+
+    var image =
+        document.getElementById("viewerImage");
+
+    var titleElement =
+        document.getElementById("viewerTitle");
+
+    var descriptionElement =
+        document.getElementById("viewerDescription");
 
 
-function buildPhotoList(){
+    image.src = imageSrc;
 
-    currentPhotos = [];
+    image.alt = title;
+
+    titleElement.textContent = title;
+
+    descriptionElement.textContent = description;
 
 
-    var activeCollection =
-        document.querySelector(
-            ".collection-view.active"
+    viewer.classList.add("active");
+
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+/* =========================
+   CLOSE PHOTO VIEWER
+========================= */
+
+function closePhoto(){
+
+    var viewer =
+        document.getElementById("photoViewer");
+
+
+    viewer.classList.remove("active");
+
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* =========================
+   ESCAPE KEY
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closePhoto();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   PREVENT IMAGE CONTEXT MENU
+========================= */
+
+document
+    .querySelectorAll("img")
+    .forEach(function(img){
+
+        img.addEventListener(
+            "contextmenu",
+            function(e){
+
+                e.preventDefault();
+
+            }
         );
 
+    });
 
-    if(!activeCollection){
-        return;
-    }
-
-
-    activeCollection
-        .querySelectorAll(".photo-card")
-        .forEach(function(card){
-
-            var image =
-                card.querySelector("img");
+</script>
 
 
-            if(image){
+</body>
 
-                currentPhotos.push({
-
-  
+</html>
