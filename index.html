@@ -175,15 +175,17 @@ header p{
 
 
 /* =========================
-   GENERAL PAGE CONTENT
+   GALLERY SECTION ON HOME
 ========================= */
 
-.page-content{
+#gallery-section{
     min-height:100vh;
 
-    padding:120px 20px 100px;
+    padding:110px 20px 100px;
 
     background:#0d0d0d;
+
+    scroll-margin-top:30px;
 }
 
 .section-title{
@@ -696,7 +698,7 @@ footer{
 
 
 /* =========================
-   PREVENT IMAGE DRAG
+   IMAGE PROTECTION
 ========================= */
 
 img{
@@ -720,19 +722,31 @@ img{
 
 <nav>
 
-    <a href="#" onclick="showPage('home'); return false;">
+    <a
+        href="#"
+        onclick="navigateToHome(); return false;"
+    >
         Home
     </a>
 
-    <a href="#" onclick="showPage('gallery'); return false;">
+    <a
+        href="#gallery"
+        onclick="navigateToGallery(); return false;"
+    >
         Gallery
     </a>
 
-    <a href="#" onclick="showPage('about'); return false;">
+    <a
+        href="#"
+        onclick="navigateToPage('about'); return false;"
+    >
         About
     </a>
 
-    <a href="#" onclick="showPage('contact'); return false;">
+    <a
+        href="#"
+        onclick="navigateToPage('contact'); return false;"
+    >
         Contact
     </a>
 
@@ -741,15 +755,23 @@ img{
 
 <!-- =========================
      HOME
+     HERO + GALLERY
 ========================= -->
 
-<div id="home" class="page active">
+<div
+    id="home"
+    class="page active"
+>
+
+    <!-- HERO -->
 
     <header>
 
         <div class="hero-content">
 
-            <h1>pridwiclicks</h1>
+            <h1>
+                pridwiclicks
+            </h1>
 
             <p>
                 Frames from the world around me
@@ -759,16 +781,10 @@ img{
 
     </header>
 
-</div>
 
+    <!-- GALLERY -->
 
-<!-- =========================
-     GALLERY
-========================= -->
-
-<div id="gallery" class="page">
-
-    <main class="page-content">
+    <section id="gallery-section">
 
         <h2 class="section-title">
             Gallery
@@ -782,7 +798,7 @@ img{
         <div class="collections">
 
 
-            <!-- SIGNATURE -->
+            <!-- SIGNATURE FOLDER -->
 
             <div
                 class="folder"
@@ -809,7 +825,7 @@ img{
             </div>
 
 
-            <!-- THE GAZE -->
+            <!-- THE GAZE FOLDER -->
 
             <div
                 class="folder"
@@ -838,7 +854,7 @@ img{
 
         </div>
 
-    </main>
+    </section>
 
 </div>
 
@@ -847,7 +863,10 @@ img{
      SIGNATURE COLLECTION
 ========================= -->
 
-<div id="signature" class="page">
+<div
+    id="signature"
+    class="page"
+>
 
     <main class="collection-page">
 
@@ -859,7 +878,7 @@ img{
 
             <button
                 class="back-button"
-                onclick="showPage('gallery')"
+                onclick="navigateToGallery()"
             >
                 ← Gallery
             </button>
@@ -875,7 +894,7 @@ img{
                 onclick="openPhoto(
                     'the-sentinel.jpg',
                     'The Sentinel',
-                    'Signature collection'
+                    'A moment captured in the wild.'
                 )"
             >
 
@@ -910,7 +929,10 @@ img{
      THE GAZE COLLECTION
 ========================= -->
 
-<div id="gaze" class="page">
+<div
+    id="gaze"
+    class="page"
+>
 
     <main class="collection-page">
 
@@ -922,7 +944,7 @@ img{
 
             <button
                 class="back-button"
-                onclick="showPage('gallery')"
+                onclick="navigateToGallery()"
             >
                 ← Gallery
             </button>
@@ -938,7 +960,7 @@ img{
                 onclick="openPhoto(
                     'the-sentinel.jpg',
                     'The Sentinel',
-                    'The Gaze collection'
+                    'Eyes, expressions and moments.'
                 )"
             >
 
@@ -973,7 +995,10 @@ img{
      ABOUT
 ========================= -->
 
-<div id="about" class="page">
+<div
+    id="about"
+    class="page"
+>
 
     <main class="placeholder-page">
 
@@ -994,7 +1019,10 @@ img{
      CONTACT
 ========================= -->
 
-<div id="contact" class="page">
+<div
+    id="contact"
+    class="page"
+>
 
     <main class="placeholder-page">
 
@@ -1022,7 +1050,7 @@ img{
 
     <button
         class="close-viewer"
-        onclick="closePhoto()"
+        onclick="closePhoto(true)"
         aria-label="Close"
     >
         ×
@@ -1069,17 +1097,11 @@ img{
 
 <script>
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+/* =====================================================
+   PAGE DISPLAY
+===================================================== */
 
-function showPage(pageId){
-
-    /* Close photo viewer if open */
-    closePhoto();
-
-
-    /* Hide every page */
+function hideAllPages(){
 
     document
         .querySelectorAll(".page")
@@ -1089,8 +1111,14 @@ function showPage(pageId){
 
         });
 
+}
 
-    /* Show requested page */
+
+function showPage(pageId){
+
+    closePhoto(false);
+
+    hideAllPages();
 
     var page =
         document.getElementById(pageId);
@@ -1101,8 +1129,24 @@ function showPage(pageId){
 
     }
 
+}
 
-    /* Always start from top */
+
+/* =====================================================
+   HOME
+===================================================== */
+
+function navigateToHome(){
+
+    history.pushState(
+        {
+            page:"home"
+        },
+        "",
+        window.location.pathname
+    );
+
+    showPage("home");
 
     window.scrollTo({
         top:0,
@@ -1112,20 +1156,87 @@ function showPage(pageId){
 }
 
 
-/* =========================
-   COLLECTION NAVIGATION
-========================= */
+/* =====================================================
+   GALLERY
+===================================================== */
 
-function openCollection(collectionId){
+function navigateToGallery(){
 
-    showPage(collectionId);
+    history.pushState(
+        {
+            page:"gallery"
+        },
+        "",
+        window.location.pathname + "#gallery"
+    );
+
+    showPage("home");
+
+    setTimeout(function(){
+
+        document
+            .getElementById("gallery-section")
+            .scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+    },50);
 
 }
 
 
-/* =========================
+/* =====================================================
+   ABOUT / CONTACT
+===================================================== */
+
+function navigateToPage(pageId){
+
+    history.pushState(
+        {
+            page:pageId
+        },
+        "",
+        window.location.pathname + "#" + pageId
+    );
+
+    showPage(pageId);
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================================
+   COLLECTIONS
+===================================================== */
+
+function openCollection(collectionId){
+
+    history.pushState(
+        {
+            page:collectionId
+        },
+        "",
+        window.location.pathname + "#" + collectionId
+    );
+
+    showPage(collectionId);
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================================
    PHOTO VIEWER
-========================= */
+===================================================== */
 
 function openPhoto(
     imageSrc,
@@ -1157,70 +1268,72 @@ function openPhoto(
 
     viewer.classList.add("active");
 
-
     document.body.style.overflow = "hidden";
+
+
+    history.pushState(
+        {
+            page:"viewer"
+        },
+        "",
+        window.location.pathname + "#viewer"
+    );
 
 }
 
 
-/* =========================
+/* =====================================================
    CLOSE PHOTO VIEWER
-========================= */
+===================================================== */
 
-function closePhoto(){
+function closePhoto(fromButton){
 
     var viewer =
         document.getElementById("photoViewer");
 
 
+    if(!viewer.classList.contains("active")){
+
+        return;
+
+    }
+
+
     viewer.classList.remove("active");
 
-
     document.body.style.overflow = "";
+
+
+    /*
+       If the X button was pressed, remove the
+       viewer history entry by going back once.
+       If Android/browser Back triggered this function,
+       do not go back again.
+    */
+
+    if(fromButton === true){
+
+        history.back();
+
+    }
 
 }
 
 
-/* =========================
-   ESCAPE KEY
-========================= */
+/* =====================================================
+   ANDROID / BROWSER BACK BUTTON
+===================================================== */
 
-document.addEventListener(
-    "keydown",
+window.addEventListener(
+    "popstate",
     function(event){
 
-        if(event.key === "Escape"){
-
-            closePhoto();
-
-        }
-
-    }
-);
+        var state =
+            event.state;
 
 
-/* =========================
-   PREVENT IMAGE CONTEXT MENU
-========================= */
+        /* ---------------------------------------------
+           PHOTO VIEWER
+        --------------------------------------------- */
 
-document
-    .querySelectorAll("img")
-    .forEach(function(img){
-
-        img.addEventListener(
-            "contextmenu",
-            function(e){
-
-                e.preventDefault();
-
-            }
-        );
-
-    });
-
-</script>
-
-
-</body>
-
-</html>
+  
