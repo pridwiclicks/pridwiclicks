@@ -1294,26 +1294,6 @@ function openCollection(collectionId){
 }
 
 
-/* =====================================================
-   BACK TO GALLERY BUTTON
-===================================================== */
-
-function backToGallery(){
-
-    closePhoto();
-
-    currentPage = "home";
-    currentCollection = null;
-
-
-    document
-        .querySelectorAll(".page")
-        .forEach(function(page){
-
-            page.classList.remove("active");
-
-        });
-
 
     document
         .getElementById("home")
@@ -1331,17 +1311,343 @@ function backToGallery(){
 
     setTimeout(function(){
 
+/* =====================================================
+   BACK TO GALLERY BUTTON
+===================================================== */
+
+function backToGallery(){
+
+    closePhotoWithoutHistory();
+
+    history.pushState(
+        {
+            type:"gallery"
+        },
+        "",
+        "#gallery"
+    );
+
+    renderHome();
+
+    setTimeout(function(){
+
+        document
+            .getElementById("gallery")
+            .scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+    },30);
+
+}
+
+
+/* =====================================================
+   PHOTO VIEWER
+===================================================== */
+
+function openPhoto(
+    imageSrc,
+    title,
+    description
+){
+
+    var viewer =
+        document.getElementById("photoViewer");
+
+    var image =
+        document.getElementById("viewerImage");
+
+    var titleElement =
+        document.getElementById("viewerTitle");
+
+    var descriptionElement =
+        document.getElementById("viewerDescription");
+
+
+    image.src = imageSrc;
+
+    image.alt = title;
+
+    titleElement.textContent = title;
+
+    descriptionElement.textContent = description;
+
+
+    history.pushState(
+        {
+            type:"viewer",
+            collection:currentCollection,
+            image:imageSrc,
+            title:title,
+            description:description
+        },
+        "",
+        "#" + currentCollection + "/photo"
+    );
+
+
+    viewer.classList.add("active");
+
+    viewer.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    document.body.classList.add("viewer-open");
+
+}
+
+
+/* =====================================================
+   CLOSE PHOTO WITHOUT HISTORY
+===================================================== */
+
+function closePhotoWithoutHistory(){
+
+    var viewer =
+        document.getElementById("photoViewer");
+
+    viewer.classList.remove("active");
+
+    viewer.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    document.body.classList.remove("viewer-open");
+
+}
+
+
+/* =====================================================
+   CLOSE PHOTO
+===================================================== */
+
+function closePhoto(){
+
+    if(
+        history.state &&
+        history.state.type === "viewer"
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        closePhotoWithoutHistory();
+
+    }
+
+}
+
+
+/* =====================================================
+   ANDROID / BROWSER BACK BUTTON
+===================================================== */
+
+window.addEventListener(
+    "popstate",
+    function(event){
+
+        var state = event.state;
+
+
+        /* =========================
+           NO STATE
+        ========================= */
+
+        if(!state){
+
+            closePhotoWithoutHistory();
+
+            renderHome();
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+            return;
+
+        }
+
+
+        /* =========================
+           PHOTO VIEWER
+        ========================= */
+
+        if(state.type === "viewer"){
+
+            renderCollection(
+                state.collection
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+           COLLECTION
+        ========================= */
+
+        if(state.type === "collection"){
+
+            closePhotoWithoutHistory();
+
+            renderCollection(
+                state.collection
+            );
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+            return;
+
+        }
+
+
+        /* =========================
+           GALLERY
+        ========================= */
+
+        if(state.type === "gallery"){
+
+            closePhotoWithoutHistory();
+
+            renderHome();
+
+            setTimeout(function(){
+
+                document
+                    .getElementById("gallery")
+                    .scrollIntoView({
+                        behavior:"auto",
+                        block:"start"
+                    });
+
+            },20);
+
+            return;
+
+        }
+
+
+        /* =========================
+           ABOUT / CONTACT
+        ========================= */
+
+        if(
+            state.type === "page" &&
+            (
+                state.page === "about" ||
+                state.page === "contact"
+            )
+        ){
+
+            closePhotoWithoutHistory();
+
+            hideAllPages();
+
+            document
+                .getElementById("home")
+                .style.display = "none";
+
+            document
+                .getElementById(state.page)
+                .classList.add("active");
+
+            currentPage = state.page;
+
+            currentCollection = null;
+
+            window.scrollTo({
+                top:0,
+                behavior:"auto"
+            });
+
+            return;
+
+        }
+
+
+        /* =========================
+           HOME
+        ========================= */
+
+        if(state.type === "home"){
+
+            closePhotoWithoutHistory();
+
+            renderHome();
+
+            window.scrollTo({
+                top:0,
+                behavior:"auto"
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closePhoto();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PREVENT IMAGE CONTEXT MENU
+===================================================== */
+
 document
+    .querySelectorAll("img")
+    .forEach(function(img){
 
-.getElementById("gallery") .scrollIntoView({ behavior:"auto", block:"start"
+        img.setAttribute(
+            "draggable",
+            "false"
+        );
 
-});
+        img.addEventListener(
+            "contextmenu",
+            function(e){
 
-},50);
+                e.preventDefault();
 
-O;
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   INITIAL PAGE DISPLAY
+===================================================== */
+
+renderHome();
 
 </script>
+
 
 </body>
 
