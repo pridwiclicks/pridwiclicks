@@ -162,7 +162,7 @@ header p{
 
 
 /* =========================
-   GALLERY SECTION ON HOME
+   GALLERY ON HOME
 ========================= */
 
 #gallery{
@@ -409,6 +409,46 @@ header p{
     border-color:rgba(255,255,255,0.25);
 }
 
+/* =========================
+   PHOTO CARD INTERACTION
+========================= */
+
+.photo-card{
+    position:relative;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+}
+
+.folder{
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+}
+
+.folder img,
+.photo-card img{
+    pointer-events:none;
+}
+
+
+/* =========================
+   ACCESSIBILITY / BUTTON FIX
+========================= */
+
+button,
+a,
+.folder,
+.photo-card{
+    -webkit-tap-highlight-color:transparent;
+}
+
+button{
+    appearance:none;
+    -webkit-appearance:none;
+}
+/* =========================
+   PHOTO IMAGES
+========================= */
+
 .photo-card img{
     display:block;
 
@@ -592,6 +632,8 @@ header p{
     cursor:pointer;
 
     transition:background 0.25s ease;
+
+    z-index:2;
 }
 
 .close-viewer:hover{
@@ -734,6 +776,7 @@ body.viewer-open{
 
 </style>
 
+
 <script src="https://cdn-in.pagesense.io/js/pridwiclicks/b34872ce6e664990a09214373545979b.js"></script>
 
 </head>
@@ -748,19 +791,31 @@ body.viewer-open{
 
 <nav>
 
-    <a href="#home" onclick="goHome(); return false;">
+    <a
+        href="#home"
+        onclick="goHome(); return false;"
+    >
         Home
     </a>
 
-    <a href="#gallery" onclick="goGallery(); return false;">
+    <a
+        href="#gallery"
+        onclick="goGallery(); return false;"
+    >
         Gallery
     </a>
 
-    <a href="#about" onclick="openPage('about'); return false;">
+    <a
+        href="#about"
+        onclick="openPage('about'); return false;"
+    >
         About
     </a>
 
-    <a href="#contact" onclick="openPage('contact'); return false;">
+    <a
+        href="#contact"
+        onclick="openPage('contact'); return false;"
+    >
         Contact
     </a>
 
@@ -817,6 +872,7 @@ body.viewer-open{
                 <img
                     src="the-sentinel.jpg"
                     alt="Signature collection"
+                    draggable="false"
                 >
 
                 <div class="folder-overlay">
@@ -844,6 +900,7 @@ body.viewer-open{
                 <img
                     src="the-sentinel.jpg"
                     alt="The Gaze collection"
+                    draggable="false"
                 >
 
                 <div class="folder-overlay">
@@ -881,8 +938,6 @@ body.viewer-open{
     </footer>
 
 </div>
-
-
 <!-- =========================
      SIGNATURE COLLECTION
 ========================= -->
@@ -898,6 +953,7 @@ body.viewer-open{
             </h2>
 
             <button
+                type="button"
                 class="back-button"
                 onclick="backToGallery()"
             >
@@ -921,6 +977,7 @@ body.viewer-open{
                 <img
                     src="the-sentinel.jpg"
                     alt="The Sentinel"
+                    draggable="false"
                 >
 
                 <div class="photo-caption">
@@ -959,6 +1016,7 @@ body.viewer-open{
             </h2>
 
             <button
+                type="button"
                 class="back-button"
                 onclick="backToGallery()"
             >
@@ -982,6 +1040,7 @@ body.viewer-open{
                 <img
                     src="the-sentinel.jpg"
                     alt="The Sentinel"
+                    draggable="false"
                 >
 
                 <div class="photo-caption">
@@ -1054,9 +1113,11 @@ body.viewer-open{
 <div
     id="photoViewer"
     class="photo-viewer"
+    aria-hidden="true"
 >
 
     <button
+        type="button"
         class="close-viewer"
         onclick="closePhoto()"
         aria-label="Close photo"
@@ -1071,6 +1132,7 @@ body.viewer-open{
             id="viewerImage"
             src=""
             alt=""
+            draggable="false"
         >
 
         <div class="viewer-caption">
@@ -1094,42 +1156,137 @@ body.viewer-open{
 
 var currentPage = "home";
 var currentCollection = null;
-var viewerOpen = false;
 
 
 /* =====================================================
-   HOME
-   Home contains BOTH hero and gallery.
+   HISTORY HELPERS
 ===================================================== */
 
-function goHome(){
+function setPageVisibility(pageId){
 
-    closePhoto();
+    var home =
+        document.getElementById("home");
+
+    var pages =
+        document.querySelectorAll(".page");
+
+
+    home.style.display =
+        pageId === "home"
+            ? "block"
+            : "none";
+
+
+    pages.forEach(function(page){
+
+        page.classList.toggle(
+            "active",
+            page.id === pageId
+        );
+
+    });
+
+}
+
+
+function closePhotoWithoutHistory(){
+
+    var viewer =
+        document.getElementById("photoViewer");
+
+    viewer.classList.remove("active");
+
+    viewer.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    document.body.classList.remove(
+        "viewer-open"
+    );
+
+}
+
+
+function showHome(){
+
+    closePhotoWithoutHistory();
 
     currentPage = "home";
     currentCollection = null;
 
-    document
-        .querySelectorAll(".page")
-        .forEach(function(page){
+    setPageVisibility("home");
 
-            page.classList.remove("active");
+}
 
-        });
 
-    document
-        .getElementById("home")
-        .style.display = "block";
+function showCollection(collectionId){
 
+    var collection =
+        document.getElementById(collectionId);
+
+    if(!collection){
+        return;
+    }
+
+    closePhotoWithoutHistory();
+
+    currentPage = collectionId;
+    currentCollection = collectionId;
+
+    setPageVisibility(collectionId);
+
+    window.scrollTo({
+        top:0,
+        behavior:"auto"
+    });
+
+}
+
+
+function showGallery(){
+
+    showHome();
+
+    setTimeout(function(){
+
+        var gallery =
+            document.getElementById("gallery");
+
+        if(gallery){
+
+            gallery.scrollIntoView({
+                behavior:"auto",
+                block:"start"
+            });
+
+        }
+
+    },20);
+
+}
+
+
+/* =====================================================
+   HOME NAVIGATION
+===================================================== */
+
+function goHome(){
+
+    closePhotoWithoutHistory();
+
+    currentPage = "home";
+    currentCollection = null;
+
+    setPageVisibility("home");
 
     history.pushState(
         {
-            page:"home"
+            type:"home"
         },
         "",
         "#home"
     );
-
 
     window.scrollTo({
         top:0,
@@ -1141,97 +1298,72 @@ function goHome(){
 
 /* =====================================================
    GALLERY NAVIGATION
-   Gallery is NOT a separate page.
-   It is below the hero on Home.
 ===================================================== */
 
 function goGallery(){
 
-    closePhoto();
+    closePhotoWithoutHistory();
 
     currentPage = "home";
     currentCollection = null;
 
-    document
-        .querySelectorAll(".page")
-        .forEach(function(page){
-
-            page.classList.remove("active");
-
-        });
-
-    document
-        .getElementById("home")
-        .style.display = "block";
-
+    setPageVisibility("home");
 
     history.pushState(
         {
-            page:"gallery"
+            type:"gallery"
         },
         "",
         "#gallery"
     );
 
-
     setTimeout(function(){
 
-        document
-            .getElementById("gallery")
-            .scrollIntoView({
+        var gallery =
+            document.getElementById("gallery");
+
+        if(gallery){
+
+            gallery.scrollIntoView({
                 behavior:"smooth",
                 block:"start"
             });
 
-    },50);
+        }
+
+    },30);
 
 }
 
 
 /* =====================================================
-   OPEN ABOUT / CONTACT
+   ABOUT / CONTACT
 ===================================================== */
 
 function openPage(pageId){
 
-    closePhoto();
+    var page =
+        document.getElementById(pageId);
+
+    if(!page){
+        return;
+    }
+
+    closePhotoWithoutHistory();
 
     currentPage = pageId;
     currentCollection = null;
 
-
-    document
-        .getElementById("home")
-        .style.display = "none";
-
-
-    document
-        .querySelectorAll(".page")
-        .forEach(function(page){
-
-            page.classList.remove("active");
-
-        });
-
-
-    var page =
-        document.getElementById(pageId);
-
-    if(page){
-
-        page.classList.add("active");
-
-    }
-
+    setPageVisibility(pageId);
 
     history.pushState(
         {
+            type:"page",
             page:pageId
         },
         "",
         "#" + pageId
     );
-
 
     window.scrollTo({
         top:0,
@@ -1247,44 +1379,28 @@ function openPage(pageId){
 
 function openCollection(collectionId){
 
-    closePhoto();
-
-    currentCollection = collectionId;
-    currentPage = collectionId;
-
-
-    document
-        .getElementById("home")
-        .style.display = "none";
-
-
-    document
-        .querySelectorAll(".page")
-        .forEach(function(page){
-
-            page.classList.remove("active");
-
-        });
-
-
     var collection =
         document.getElementById(collectionId);
 
-    if(collection){
-
-        collection.classList.add("active");
-
+    if(!collection){
+        return;
     }
 
+    closePhotoWithoutHistory();
+
+    currentPage = collectionId;
+    currentCollection = collectionId;
+
+    setPageVisibility(collectionId);
 
     history.pushState(
         {
-            page:collectionId
+            type:"collection",
+            collection:collectionId
         },
         "",
         "#" + collectionId
     );
-
 
     window.scrollTo({
         top:0,
@@ -1292,32 +1408,16 @@ function openCollection(collectionId){
     });
 
 }
-
-
-
-    document
-        .getElementById("home")
-        .style.display = "block";
-
-
-    history.pushState(
-        {
-            page:"gallery"
-        },
-        "",
-        "#gallery"
-    );
-
-
-    setTimeout(function(){
-
 /* =====================================================
-   BACK TO GALLERY BUTTON
+   BACK TO GALLERY
 ===================================================== */
 
 function backToGallery(){
 
     closePhotoWithoutHistory();
+
+    currentPage = "home";
+    currentCollection = null;
 
     history.pushState(
         {
@@ -1327,16 +1427,21 @@ function backToGallery(){
         "#gallery"
     );
 
-    renderHome();
+    setPageVisibility("home");
 
     setTimeout(function(){
 
-        document
-            .getElementById("gallery")
-            .scrollIntoView({
+        var gallery =
+            document.getElementById("gallery");
+
+        if(gallery){
+
+            gallery.scrollIntoView({
                 behavior:"smooth",
                 block:"start"
             });
+
+        }
 
     },30);
 
@@ -1366,25 +1471,49 @@ function openPhoto(
         document.getElementById("viewerDescription");
 
 
+    if(!viewer || !image){
+        return;
+    }
+
+
     image.src = imageSrc;
 
-    image.alt = title;
+    image.alt = title || "";
 
-    titleElement.textContent = title;
 
-    descriptionElement.textContent = description;
+    titleElement.textContent =
+        title || "";
 
+    descriptionElement.textContent =
+        description || "";
+
+
+    /*
+       Opening a photo creates its own
+       browser-history entry.
+
+       Android Back therefore closes the
+       viewer and returns to the collection.
+    */
 
     history.pushState(
         {
             type:"viewer",
+
             collection:currentCollection,
+
             image:imageSrc,
+
             title:title,
+
             description:description
         },
         "",
-        "#" + currentCollection + "/photo"
+        "#" +
+        (
+            currentCollection || "gallery"
+        ) +
+        "/photo"
     );
 
 
@@ -1395,19 +1524,27 @@ function openPhoto(
         "false"
     );
 
-    document.body.classList.add("viewer-open");
+    document.body.classList.add(
+        "viewer-open"
+    );
 
 }
 
 
 /* =====================================================
-   CLOSE PHOTO WITHOUT HISTORY
+   CLOSE PHOTO WITHOUT CHANGING HISTORY
 ===================================================== */
 
 function closePhotoWithoutHistory(){
 
     var viewer =
         document.getElementById("photoViewer");
+
+
+    if(!viewer){
+        return;
+    }
+
 
     viewer.classList.remove("active");
 
@@ -1416,7 +1553,9 @@ function closePhotoWithoutHistory(){
         "true"
     );
 
-    document.body.classList.remove("viewer-open");
+    document.body.classList.remove(
+        "viewer-open"
+    );
 
 }
 
@@ -1426,6 +1565,14 @@ function closePhotoWithoutHistory(){
 ===================================================== */
 
 function closePhoto(){
+
+    /*
+       If the viewer is the current history
+       state, go back one history step.
+
+       popstate will then restore the
+       collection automatically.
+    */
 
     if(
         history.state &&
@@ -1452,22 +1599,26 @@ window.addEventListener(
     "popstate",
     function(event){
 
-        var state = event.state;
+        var state =
+            event.state;
 
 
         /* =========================
-           NO STATE
+           NO HISTORY STATE
         ========================= */
 
         if(!state){
 
             closePhotoWithoutHistory();
 
-            renderHome();
+            currentPage = "home";
+            currentCollection = null;
+
+            setPageVisibility("home");
 
             window.scrollTo({
                 top:0,
-                behavior:"smooth"
+                behavior:"auto"
             });
 
             return;
@@ -1481,9 +1632,25 @@ window.addEventListener(
 
         if(state.type === "viewer"){
 
-            renderCollection(
-                state.collection
-            );
+            /*
+               Normally this state is the
+               state being left, not entered.
+
+               Kept here for safety.
+            */
+
+            if(state.collection){
+
+                showCollection(
+                    state.collection
+                );
+
+            }
+            else{
+
+                showHome();
+
+            }
 
             return;
 
@@ -1498,14 +1665,9 @@ window.addEventListener(
 
             closePhotoWithoutHistory();
 
-            renderCollection(
+            showCollection(
                 state.collection
             );
-
-            window.scrollTo({
-                top:0,
-                behavior:"smooth"
-            });
 
             return;
 
@@ -1520,16 +1682,26 @@ window.addEventListener(
 
             closePhotoWithoutHistory();
 
-            renderHome();
+            currentPage = "home";
+            currentCollection = null;
+
+            setPageVisibility("home");
 
             setTimeout(function(){
 
-                document
-                    .getElementById("gallery")
-                    .scrollIntoView({
+                var gallery =
+                    document.getElementById(
+                        "gallery"
+                    );
+
+                if(gallery){
+
+                    gallery.scrollIntoView({
                         behavior:"auto",
                         block:"start"
                     });
+
+                }
 
             },20);
 
@@ -1552,19 +1724,12 @@ window.addEventListener(
 
             closePhotoWithoutHistory();
 
-            hideAllPages();
-
-            document
-                .getElementById("home")
-                .style.display = "none";
-
-            document
-                .getElementById(state.page)
-                .classList.add("active");
-
             currentPage = state.page;
-
             currentCollection = null;
+
+            setPageVisibility(
+                state.page
+            );
 
             window.scrollTo({
                 top:0,
@@ -1584,12 +1749,17 @@ window.addEventListener(
 
             closePhotoWithoutHistory();
 
-            renderHome();
+            currentPage = "home";
+            currentCollection = null;
+
+            setPageVisibility("home");
 
             window.scrollTo({
                 top:0,
                 behavior:"auto"
             });
+
+            return;
 
         }
 
@@ -1607,7 +1777,16 @@ document.addEventListener(
 
         if(event.key === "Escape"){
 
-            closePhoto();
+            if(
+                document
+                    .getElementById("photoViewer")
+                    .classList
+                    .contains("active")
+            ){
+
+                closePhoto();
+
+            }
 
         }
 
@@ -1616,7 +1795,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   PREVENT IMAGE CONTEXT MENU
+   IMAGE PROTECTION
 ===================================================== */
 
 document
@@ -1628,11 +1807,22 @@ document
             "false"
         );
 
+
+        img.addEventListener(
+            "dragstart",
+            function(event){
+
+                event.preventDefault();
+
+            }
+        );
+
+
         img.addEventListener(
             "contextmenu",
-            function(e){
+            function(event){
 
-                e.preventDefault();
+                event.preventDefault();
 
             }
         );
@@ -1641,10 +1831,174 @@ document
 
 
 /* =====================================================
+   PREVENT VIEWER CLICK FROM CLOSING
+===================================================== */
+
+document
+    .getElementById("photoViewer")
+    .addEventListener(
+        "click",
+        function(event){
+
+            /*
+               Clicking the dark background closes
+               the viewer like a gallery/lightbox.
+
+               Clicking the actual image/caption
+               does not.
+            */
+
+            if(
+                event.target ===
+                this
+            ){
+
+                closePhoto();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
    INITIAL PAGE DISPLAY
 ===================================================== */
 
-renderHome();
+(function initializeWebsite(){
+
+    var hash =
+        window.location.hash;
+
+
+    /*
+       Start at Home if there is no
+       recognized hash.
+    */
+
+    if(!hash){
+
+        history.replaceState(
+            {
+                type:"home"
+            },
+            "",
+            "#home"
+        );
+
+        showHome();
+
+        return;
+
+    }
+
+
+    var cleanHash =
+        hash.substring(1);
+
+
+    /*
+       Directly opening a collection URL.
+    */
+
+    if(
+        cleanHash === "signature" ||
+        cleanHash === "gaze"
+    ){
+
+        currentPage = cleanHash;
+
+        currentCollection =
+            cleanHash;
+
+        history.replaceState(
+            {
+                type:"collection",
+                collection:cleanHash
+            },
+            "",
+            "#" + cleanHash
+        );
+
+        showCollection(
+            cleanHash
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Directly opening About.
+    */
+
+    if(
+        cleanHash === "about" ||
+        cleanHash === "contact"
+    ){
+
+        currentPage = cleanHash;
+
+        history.replaceState(
+            {
+                type:"page",
+                page:cleanHash
+            },
+            "",
+            "#" + cleanHash
+        );
+
+        setPageVisibility(
+            cleanHash
+        );
+
+        window.scrollTo({
+            top:0,
+            behavior:"auto"
+        });
+
+        return;
+
+    }
+
+
+    /*
+       Directly opening Gallery.
+    */
+
+    if(cleanHash === "gallery"){
+
+        history.replaceState(
+            {
+                type:"gallery"
+            },
+            "",
+            "#gallery"
+        );
+
+        showGallery();
+
+        return;
+
+    }
+
+
+    /*
+       Everything else goes Home.
+    */
+
+    history.replaceState(
+        {
+            type:"home"
+        },
+        "",
+        "#home"
+    );
+
+    showHome();
+
+})();
 
 </script>
 
