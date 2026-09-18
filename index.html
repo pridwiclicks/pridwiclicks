@@ -519,6 +519,120 @@ button{
     font-size:14px;
 }
 
+/* =========================
+   CONTACT FORM
+========================= */
+
+.contact-form{
+    width:min(560px, 100%);
+
+    margin-top:36px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    text-align:left;
+}
+
+.contact-form label{
+    font-size:12px;
+
+    color:#888;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+}
+
+.contact-form input,
+.contact-form textarea{
+    width:100%;
+
+    box-sizing:border-box;
+
+    margin-top:8px;
+
+    padding:14px 0;
+
+    border:none;
+
+    border-bottom:1px solid #333;
+
+    background:transparent;
+
+    color:#fff;
+
+    font-family:inherit;
+
+    font-size:15px;
+
+    outline:none;
+
+    border-radius:0;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+    border-bottom-color:#888;
+}
+
+.contact-form textarea{
+    min-height:140px;
+
+    resize:vertical;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder{
+    color:#555;
+}
+
+.contact-form button{
+    align-self:flex-start;
+
+    margin-top:8px;
+
+    padding:12px 24px;
+
+    border:1px solid #444;
+
+    border-radius:999px;
+
+    background:transparent;
+
+    color:#fff;
+
+    font-family:inherit;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease;
+}
+
+.contact-form button:hover{
+    background:#fff;
+
+    color:#000;
+
+    border-color:#fff;
+}
+
+.contact-form .form-note{
+    margin-top:2px;
+
+    color:#666;
+
+    font-size:11px;
+
+    text-align:left;
+}
 
 /* =========================
    PHOTO VIEWER
@@ -1326,9 +1440,80 @@ body.viewer-open{
             Contact
         </h2>
 
-        <p>
-            Coming Soon
-        </p>
+        <form
+            id="contact-form"
+            class="contact-form"
+            action="https://splitforms.com/api/submit"
+            method="POST"
+        >
+
+            <input
+                type="hidden"
+                name="access_key"
+                value="160db4c6f70a4fdb98939a6a49faf416"
+            >
+
+            <input
+                type="hidden"
+                name="subject"
+                value="New contact from Pridwiclicks"
+            >
+
+            <input
+                type="hidden"
+                name="form_loaded_at"
+                id="form_loaded_at"
+            >
+           <script>
+    document.currentScript.previousElementSibling.value = Date.now();
+           </script>
+
+            <!-- Honeypot -->
+            <input
+                type="checkbox"
+                name="botcheck"
+                style="display:none"
+                tabindex="-1"
+                autocomplete="off"
+            >
+
+            <div>
+
+                <label for="contact-email">
+                    Email
+                </label>
+
+                <input
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    placeholder="your@email.com"
+                    required
+                    autocomplete="email"
+                >
+
+            </div>
+
+            <div>
+
+                <label for="contact-message">
+                    Message
+                </label>
+
+                <textarea
+                    id="contact-message"
+                    name="message"
+                    placeholder="Write your message..."
+                    required
+                ></textarea>
+
+            </div>
+
+            <button type="submit">
+                Send
+            </button>
+
+        </form>
 
     </main>
 
