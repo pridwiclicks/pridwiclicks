@@ -519,6 +519,61 @@ button{
     font-size:14px;
 }
 
+   /* =========================
+   ABOUT PAGE
+========================= */
+
+.about-page{
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:120px 8vw 100px;
+}
+
+.about-line{
+    width:1px;
+
+    height:62vh;
+
+    background:#444;
+
+    flex-shrink:0;
+}
+
+.about-content{
+    margin-left:32px;
+}
+
+.about-label{
+    margin-bottom:28px;
+
+    font-size:12px;
+
+    font-weight:400;
+
+    color:#777;
+
+    letter-spacing:0.08em;
+
+    text-transform:lowercase;
+}
+
+.about-content h2{
+    margin:0;
+
+    font-size:clamp(58px, 7vw, 112px);
+
+    line-height:0.92;
+
+    font-weight:500;
+
+    letter-spacing:-0.045em;
+
+    text-align:left;
+}
 /* =========================
    CONTACT FORM
 ========================= */
@@ -869,9 +924,33 @@ img{
         font-size:28px;
     }
 
-    .placeholder-page h2{
-        font-size:34px;
-    }
+    .about-page{
+    min-height:100vh;
+
+    padding:120px 24px 80px;
+}
+
+.about-line{
+    height:60vh;
+}
+
+.about-content{
+    margin-left:22px;
+}
+
+.about-label{
+    margin-bottom:22px;
+
+    font-size:11px;
+}
+
+.about-content h2{
+    font-size:clamp(44px, 13vw, 72px);
+
+    line-height:0.94;
+
+    letter-spacing:-0.04em;
+}
 
     .viewer-content img{
         max-height:70vh;
@@ -1413,20 +1492,29 @@ body.viewer-open{
 
 <div id="about" class="page">
 
-    <main class="placeholder-page">
+    <main class="about-page">
 
-        <h2>
-            About
-        </h2>
+        <div class="about-line" aria-hidden="true"></div>
 
-        <p>
-            Clicking things I find worth noticing.
-        </p>
+        <div class="about-content">
+
+            <div class="about-label">
+                about
+            </div>
+
+            <h2>
+                Clicking<br>
+                things<br>
+                I find<br>
+                worth<br>
+                noticing.
+            </h2>
+
+        </div>
 
     </main>
 
 </div>
-
 
 <!-- =========================
      CONTACT
